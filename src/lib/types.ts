@@ -7,7 +7,7 @@
  */
 
 export type AppRole = "super_admin" | "admin" | "content_manager" | "blood_help_manager";
-export type MemberStatus = "active" | "disabled";
+export type MemberStatus = "active" | "disabled" | "pending";
 export type BlogStatus = "pending" | "approved" | "rejected" | "unpublished";
 export type MediaType = "youtube" | "news";
 export type BannerType = "info" | "success" | "warning" | "urgent";

@@ -327,7 +327,7 @@ async function run() {
     check("approved blog becomes public", publicList.includes(blogTitle));
   }
 
-  console.log("\n4. Registrations: disable and re-activate");
+  console.log("\n4. Registrations: approve, disable and re-activate");
   // Self-contained fixture: a member created through the public RPC.
   const { data: fixture } = await admin
     .rpc("submit_registration", {
@@ -346,6 +346,40 @@ async function run() {
     .select("id, status")
     .eq("full_name", `AutomationMember${stamp}`)
     .maybeSingle();
+
+  check("new member starts as pending", member?.status === "pending", member?.status ?? "(missing)");
+
+  // Approve through the member detail panel, the same action an admin uses.
+  if (member) {
+    const detail = await (
+      await fetch(`${BASE}/admin/registrations?view=member&id=${member.id}`, { headers: { cookie } })
+    ).text();
+    const approveForm = [...detail.matchAll(/<form\b[\s\S]*?<\/form>/g)]
+      .map((match) => match[0])
+      .find((form) => form.includes('name="memberId"'));
+
+    if (approveForm) {
+      const fields = [];
+      for (const tag of approveForm.matchAll(/<input\b([^>]*)>/g)) {
+        const [, attributes] = tag;
+        const name = attributes.match(/name="([^"]+)"/)?.[1];
+        const value = attributes.match(/value="([^"]*)"/)?.[1] ?? "";
+        if (name && !/^\$ACTION_ID_/.test(name)) {
+          fields.push([name, value.replace(/&quot;/g, '"').replace(/&amp;/g, "&")]);
+        }
+      }
+      await act(`/admin/registrations?view=member&id=${member.id}`, fields, { memberId: member.id });
+    } else {
+      check("approve form rendered for the pending member", false);
+    }
+
+    const { data: afterApproval } = await admin
+      .from("members")
+      .select("id, status")
+      .eq("id", member.id)
+      .maybeSingle();
+    check("member approved from the panel", afterApproval?.status === "active", afterApproval?.status ?? "(missing)");
+  }
 
   let disableOutcome = { status: 0, summary: "no disable form" };
   let disableFields = [];

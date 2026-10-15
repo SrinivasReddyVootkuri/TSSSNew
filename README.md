@@ -349,6 +349,7 @@ node scripts/id-card-bulk-check.mjs email pass    # 11 checks: bulk ID card ZIP
 node scripts/donation-import-check.mjs email pass # 16 checks: CSV import + dedupe
 node scripts/sanitizer-check.mjs                 # 25 checks: XSS payloads + output contract
 node scripts/security-audit-check.mjs email pass # 10 checks: upload forgery, roles, limiter identity
+node scripts/member-approval-check.mjs email pass   # 10 checks: pending registration, approval email, resend
 ```
 
 Helpers:
@@ -414,7 +415,9 @@ supabase/
             0005_admin_auth_hardening.sql,
             0006_profiles_and_blood_donation.sql,
             0007_blog_created_by.sql, 0008_member_filter_rpc.sql,
-            0009_donation_standalone_dedupe.sql
+            0009_donation_standalone_dedupe.sql,
+            0010_blood_help_to_donations.sql,
+            0011_member_pending_status.sql, 0012_member_pending_default.sql
   seed.sql, photo-booth-seed.sql, remove-demo-content.sql, reset-sequences.sql
 scripts/               SQL helpers, frame/placeholder generators, smoke tests, dev helpers
 ```

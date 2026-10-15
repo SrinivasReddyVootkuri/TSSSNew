@@ -61,9 +61,9 @@ export default async function EventsPage() {
               <Link
                 key={category.id}
                 href={`/events/${category.slug}`}
-                className="surface-card surface-card-hover group relative flex min-h-44 flex-col justify-end overflow-hidden p-6"
+                className="group relative flex min-h-44 flex-col justify-end overflow-hidden rounded-4xl border border-white/10 bg-ink-950 p-6 shadow-[0_12px_32px_-18px_rgba(5,37,64,0.28)] transition-transform duration-300 hover:-translate-y-1"
               >
-                <div className="absolute inset-0 -z-10">
+                <div className="absolute inset-0" aria-hidden="true">
                   <Image
                     src={category.cover_image || PLACEHOLDER_EVENT_IMAGE}
                     alt=""
@@ -73,17 +73,19 @@ export default async function EventsPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/80 to-ink-950/40" />
                 </div>
-                <p className="text-xs font-semibold tracking-[0.16em] text-gold-300 uppercase">
-                  {counts[category.id] ?? 0} upcoming
-                </p>
-                <h2 className="mt-2 font-display text-xl font-semibold text-white group-hover:text-gold-200">
-                  {category.name}
-                </h2>
-                {category.description ? (
-                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-white/60">
-                    {category.description}
+                <div className="relative">
+                  <p className="text-xs font-semibold tracking-[0.16em] text-gold-300 uppercase">
+                    {counts[category.id] ?? 0} upcoming
                   </p>
-                ) : null}
+                  <h2 className="mt-2 font-display text-xl font-semibold text-white group-hover:text-gold-200">
+                    {category.name}
+                  </h2>
+                  {category.description ? (
+                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-white/60">
+                      {category.description}
+                    </p>
+                  ) : null}
+                </div>
               </Link>
             ))}
           </div>

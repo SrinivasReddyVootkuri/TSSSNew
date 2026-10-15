@@ -265,10 +265,11 @@ Limits: **3 submissions per day** from the same device. Blank lines separate par
 
 1. Fill the form and press **Submit Registration**.
 2. A green confirmation appears with your registration number in large gold type, formatted
-   like **TSSS000123**.
+   like **TSSS000123**. Your registration is now **pending approval** — it does not count
+   as active until an administrator approves it.
 3. A summary table shows your name, date of birth, village and registration date.
-4. Press **Download your ID card** for a printable card with your photo and details. The link
-   works for one hour. Afterwards, use **Print** or **Download / Save as PDF** to keep a copy.
+4. Press **Download your ID card** for an immediate copy. Once approved, the official card
+   arrives by email as well. Use **Print** or **Download / Save as PDF** to keep a copy.
    **Back to home** finishes.
 
 ### If something goes wrong
@@ -289,12 +290,15 @@ If the trust pauses registration, the button is disabled and a notice explains w
 
 ### Your ID card
 
-Every member gets an identity card in the trust's design: emblem and trust name across the
-top, your photograph, your name, father's name, designation, mobile number, address, blood
-group, date of birth, gender and age, with the organisation's phone and email at the bottom.
+Every approved member gets an identity card in the trust's design: emblem and trust name
+across the top, your photograph, your name, father's name, designation, mobile number,
+address, blood group, date of birth, gender and age, with the organisation's phone and email
+at the bottom.
 
-- Press **Download your ID card** on the success screen. The link works for one hour and is
-  tied to your registration — it stops working if your phone number is corrected.
+- Press **Download your ID card** on the success screen for an immediate copy (one-hour link).
+- Once an administrator approves your registration, the official card arrives **by email**
+  with your auto-generated registration number. Give it a few days; if nothing arrives,
+  contact the trust — your email address may have a typo, which an administrator can correct.
 - If you registered without a photo, the card prints "No photo" in its place.
 - Members registered before the photo field existed print em dashes for the fields they never
   supplied. Their cards remain valid.
@@ -773,12 +777,13 @@ Press **Close** to collapse the panel, or **Review "…" again** to reopen it.
 ## 19. Registrations
 
 **/admin/registrations** is the member list. **Members cannot be created or deleted here** —
-they exist only by public registration.
+they exist only by public registration. New registrations arrive as **pending** and stay
+invisible to the public counters until approved.
 
 ### Finding members
 
 - **Search** covers registration number, name, father's name, village, mobile and email.
-- **Status** — All / Active / Disabled.
+- **Status** — All / Pending approval / Active / Disabled.
 - **Gender, blood group, state, country** — dropdowns. A mistyped value in the address bar is
   treated as unset rather than emptying the list.
 - **Blood donated** — All / Donated / Never donated, matched against the donation records.
@@ -794,11 +799,28 @@ and the export — what is listed is what downloads.
 **Columns**: Registration No., Full Name, Date of Birth, Village, Mobile, Registered, Status,
 Actions.
 
-**Actions**: **View** opens the member's record. **Disable** / **Activate** toggles their
-status — a disabled member stays on the list but is excluded from the "Registered Members"
+**Actions**: **View** opens the member's record. **Review** (pending members) opens the
+record scrolled to approval. **Disable** / **Activate** toggles their status — a disabled
+member stays on the list but is excluded from the "Registered Members"
 counter on the home page and from most queries. Disabling is the right tool for a duplicate or
 fraudulent record; **deliberately do not delete member records**, since registration numbers
 must never be reused.
+
+### Approving a member
+
+Open a pending member and use the gold **Approve & send ID card** panel. Approving flips
+them to active and emails their identity card with the auto-generated registration number.
+The panel tells you exactly what happened:
+
+- *"is now an active member and the ID card was emailed"* — done, nothing more to do.
+- *"was approved, but the email could not be sent"* — the member is active, but send the
+  card manually (download it from the same panel). This means the mail server is unreachable
+  or unconfigured — see the SMTP setup below.
+- *"No email address is on record"* — the member registered without one. Approve still
+  activates them; download and forward the card another way.
+
+The same button on an active member re-sends a fresh card — use it when somebody says the
+email never arrived. Every approval and re-send is written to the audit log.
 
 ### Viewing a member
 
@@ -1121,6 +1143,23 @@ CENTRAL_ADMIN_WHATSAPP
 **Without these keys the system runs in console mode**: notifications are written to the
 server log instead of being delivered. Nothing breaks, but nobody receives anything.
 
+**Outgoing mail for ID cards (SMTP).** Approval emails carry the member's card as a PNG
+attachment and go through your own mailbox, not the notification providers above:
+
+```
+SMTP_HOST=mail.yourprovider.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=no-reply@srinivasulasevasamstha.com
+SMTP_PASS=…
+SMTP_FROM="Srinivasula Seva Samstha <no-reply@srinivasulasevasamstha.com>"
+```
+
+Use port 587 without TLS for most shared hosts, or port 465 with `SMTP_SECURE=true` for
+providers that require implicit TLS. Without these, approvals still activate members — the
+panel says the email was skipped, and you download the card from the member's record instead.
+Gmail users need an App Password, not the mailbox password.
+
 ---
 
 ## 23. Team and roles
@@ -1288,6 +1327,7 @@ bulk ID card download.** Everything else is handled one record at a time.
 | "I submitted a blog and cannot see it" | It is waiting for review. Check the Pending queue |
 | "My blood request shows nothing" | There is no public tracking page. Quote the reference number when you call |
 | "My ID card link expired" | Links last one hour. The trust can reissue a card from the registration number at any time |
+| "I registered but heard nothing" | Registrations wait for approval. Ask the trust to check the pending queue; the ID card arrives by email after approval |
 | "The contact form says sent but nobody replied" | Check the trust inbox, and confirm the FormSubmit activation email was accepted the first time |
 | "The photo booth will not download" | Mobile browsers sometimes open the share sheet instead. Dismiss it and the file saves. Try a desktop browser |
 | "A page shows a broken image" | The photograph may not have uploaded. An administrator can re-upload it |
@@ -1308,6 +1348,8 @@ bulk ID card download.** Everything else is handled one record at a time.
 | No "return to pending" button | Not provided. Use **Review**, set Status to Pending, save |
 | Cannot change someone's role | Not supported in the panel — deactivate and re-add, or use Supabase |
 | Cannot reset a password for someone | Use **Forgot your password?** on the sign-in screen and send them the link |
+| Approval says the email could not be sent | The member is active; the mail server is unreachable or SMTP is unconfigured. Download the card from their record and check the SMTP variables |
+| New members never arrive | Check the **Pending approval** filter — registrations wait there until approved, invisible to public counters |
 | Blood request shows "Unassigned" | No active volunteer covers that area. Add one under Administrators |
 | Import says "header is missing" | The first row must match the template exactly. Re-download it and paste data under it |
 | Import shows "Already recorded" for everything | That exact file (or those references) was already imported. Change the references for genuinely new donations |

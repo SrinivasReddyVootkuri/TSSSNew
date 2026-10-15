@@ -33,7 +33,13 @@ export function BlogCard({ blog }: { blog: BlogRow }) {
         ) : null}
         <div className="mt-auto flex items-center justify-between gap-3 pt-3 text-xs text-slate-500">
           <span className="truncate">By {blog.author_name}</span>
-          <span className="shrink-0 font-semibold text-gold-700">Read article</span>
+          <Link
+            href={`/blogs/${blog.slug}`}
+            aria-label={`Read article: ${blog.title}`}
+            className="shrink-0 font-semibold text-gold-700 hover:text-gold-600 hover:underline"
+          >
+            Read article
+          </Link>
         </div>
       </div>
     </article>

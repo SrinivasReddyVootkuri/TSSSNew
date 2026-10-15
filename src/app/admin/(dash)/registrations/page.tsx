@@ -155,6 +155,7 @@ export default async function RegistrationsPage({
               className="h-10 rounded-full border border-brand-200 bg-white px-4 text-sm focus:border-gold-400 focus:outline-none"
             >
               <option value="all">All</option>
+              <option value="pending">Pending approval</option>
               <option value="active">Active</option>
               <option value="disabled">Disabled</option>
             </select>
@@ -406,6 +407,13 @@ export default async function RegistrationsPage({
                 </Link>
                 {row.status === "active" ? (
                   <AdminQuickButton entity="member" id={row.id} action="set-disabled" label="Disable" />
+                ) : row.status === "pending" ? (
+                  <Link
+                    href={buildHref({ view: "member", id: row.id })}
+                    className="rounded-full bg-gold-100 px-3 py-1.5 text-xs font-semibold text-gold-800 hover:bg-gold-200"
+                  >
+                    Review
+                  </Link>
                 ) : (
                   <AdminQuickButton entity="member" id={row.id} action="set-active" label="Activate" />
                 )}

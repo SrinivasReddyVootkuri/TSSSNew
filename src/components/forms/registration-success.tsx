@@ -37,6 +37,8 @@ export function RegistrationSuccess({ data }: { data: RegistrationConfirmation }
             <h1 className="mt-4 text-2xl font-semibold sm:text-3xl">Registration Successful</h1>
             <p className="mt-2 text-sm text-white/65">
               Thank you for joining Srinivasula Seva Samstha. Please save your registration number.
+              An administrator will review your details shortly — your ID card arrives by email once
+              approved.
             </p>
           </div>
         </div>

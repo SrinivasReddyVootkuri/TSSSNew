@@ -39,7 +39,28 @@ import type { FormState } from "@/lib/actions/state";
 /* Registration                                                               */
 /* -------------------------------------------------------------------------- */
 
-export async function registerMember(
+/**
+ * No public action may throw: an unexpected failure (a dropped database
+ * connection, a stalled upload) must come back as a form message the visitor
+ * can retry, never as the application error page.
+ */
+async function withFriendlyErrors(
+  action: string,
+  run: () => Promise<FormState>,
+): Promise<FormState> {
+  try {
+    return await run();
+  } catch (error) {
+    console.error(`${action} failed unexpectedly:`, error);
+    return {
+      status: "error",
+      message:
+        "We could not reach our servers. Please check your connection and try again in a moment.",
+    };
+  }
+}
+
+async function registerMemberInner(
   _previous: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -196,11 +217,27 @@ export async function registerMember(
   };
 }
 
+export async function registerMember(
+  _previous: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  return withFriendlyErrors("registerMember", () => registerMemberInner(_previous, formData));
+}
+
 /* -------------------------------------------------------------------------- */
 /* Blood donations                                                          */
 /* -------------------------------------------------------------------------- */
 
 export async function submitBloodHelpRequest(
+  _previous: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  return withFriendlyErrors("submitBloodHelpRequest", () =>
+    submitBloodHelpRequestInner(_previous, formData),
+  );
+}
+
+async function submitBloodHelpRequestInner(
   _previous: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -345,6 +382,13 @@ export async function registerDonor(
   _previous: FormState,
   formData: FormData,
 ): Promise<FormState> {
+  return withFriendlyErrors("registerDonor", () => registerDonorInner(_previous, formData));
+}
+
+async function registerDonorInner(
+  _previous: FormState,
+  formData: FormData,
+): Promise<FormState> {
   if (isHoneypotTripped(formData)) {
     return { status: "success", message: "Thank you for your willingness to donate." };
   }
@@ -463,6 +507,13 @@ export async function registerDonor(
 /* -------------------------------------------------------------------------- */
 
 export async function submitBlogPost(
+  _previous: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  return withFriendlyErrors("submitBlogPost", () => submitBlogPostInner(_previous, formData));
+}
+
+async function submitBlogPostInner(
   _previous: FormState,
   formData: FormData,
 ): Promise<FormState> {

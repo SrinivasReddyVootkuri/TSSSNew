@@ -22,7 +22,7 @@ export type MemberQuery = {
   page: number;
   perPage: number;
   search: string;
-  status: "all" | "active" | "disabled";
+  status: "all" | "active" | "disabled" | "pending";
   gender: string;
   bloodGroup: string;
   state: string;
@@ -103,7 +103,7 @@ export function parseMemberQuery(params: {
   const page = Math.max(1, Number(params.page ?? "1") || 1);
   const perPage = Math.min(200, Math.max(10, Number(params.perPage ?? "25") || 25));
   const search = (params.search ?? "").trim().slice(0, 120);
-  const status = (["all", "active", "disabled"] as const).find(
+  const status = (["all", "active", "disabled", "pending"] as const).find(
     (value) => value === params.status,
   ) ?? "all";
   const donated = (["all", "yes", "no"] as const).find(
