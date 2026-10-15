@@ -69,8 +69,7 @@ export function Hero({ name, tagline, nextEvent }: Props) {
           <div className="order-1 lg:order-2 lg:col-span-7">
             <p className="inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-500/15 px-4 py-1.5 text-xs font-semibold tracking-[0.16em] text-brand-200 uppercase">
               <span className="size-1.5 animate-pulse rounded-full bg-gold-300" aria-hidden="true" />
-              Non-profit community trust
-            </p>
+              Non-profit organization</p>
 
             <h1 className="mt-6 text-4xl leading-[1.08] font-semibold text-balance sm:text-5xl lg:text-6xl">
               <span className="text-white">{name}</span>

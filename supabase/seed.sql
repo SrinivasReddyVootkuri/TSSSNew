@@ -17,7 +17,7 @@ values (
   'Srinivasula Seva Samstha',
   'TSSS',
   'Service · Devotion · Unity',
-  'Srinivasula Seva Samstha is a non-profit community trust that brings Srinivas families together through devotional programmes, education, blood assistance and community service.',
+  'Srinivasula Seva Samstha is a Non-profit organization that brings Srinivas families together through devotional programmes, education, blood assistance and community service.',
   'To serve society through devotional programmes, education, relief and healthcare assistance while strengthening the bond between every Srinivas family.',
   'A united, spiritually grounded Srinivas community that serves every family with dignity, care and compassion.'
 )

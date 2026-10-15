@@ -1,6 +1,6 @@
 # TSSS Website — User Manual
 
-**Srinivasula Seva Samstha (TSSS)** — non-profit community trust website and admin panel.
+**Srinivasula Seva Samstha (TSSS)** — Non-profit organization  website and admin panel.
 
 This manual covers what the website does, how a visitor uses each feature, and how an
 administrator manages the site. It is written for the trust's office staff and volunteers —

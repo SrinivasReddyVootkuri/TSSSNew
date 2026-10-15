@@ -7,7 +7,7 @@ export const SITE_SHORT_NAME = "TSSS";
 export const SITE_FULL_TITLE = "Srinivasula Seva Samstha (TSSS)";
 export const SITE_TAGLINE = "Service · Devotion · Unity";
 export const SITE_DESCRIPTION =
-  "Srinivasula Seva Samstha (TSSS) is a non-profit community trust serving the Srinivas community through devotional programmes, education, blood assistance and community service.";
+  "Srinivasula Seva Samstha (TSSS) is a Non-profit organization serving the Srinivas community through devotional programmes, education, blood assistance and community service.";
 
 export type NavItem = {
   href: string;

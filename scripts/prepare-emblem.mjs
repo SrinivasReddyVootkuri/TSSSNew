@@ -1,13 +1,15 @@
 /**
- * Prepares the display copy of the trust emblem.
+ * Prepares the display copies of the trust emblem.
  *
- * Input  : public/brand/tsss-emblem-original.png  (untouched artwork)
+ * Input  : public/brand/tsss-emblem-original.jpg  (untouched master artwork)
  * Output : public/brand/tsss-emblem.png           (1024px, circular, transparent
  *                                                  outside the badge)
+ *          public/brand/tsss-emblem.jpg           (1024px, badge on white)
  *
- * The artwork ships as a small white rectangle, which looks wrong on the dark
+ * The artwork ships as a white rectangle, which looks wrong on the dark
  * sections of the site. This script trims the white margin, rounds the corners
- * into the badge circle and upscales it for high-density screens.
+ * into the badge circle and scales it for high-density screens. The master
+ * itself is never rewritten.
  *
  *   npm run brand:emblem
  */
@@ -17,9 +19,8 @@ import path from "node:path";
 import sharp from "sharp";
 
 const root = path.resolve(import.meta.dirname, "..");
-const originalPath = path.join(root, "public/brand/tsss-emblem-original.png");
+const originalPath = path.join(root, "public/brand/tsss-emblem-original.jpg");
 const outputPath = path.join(root, "public/brand/tsss-emblem.png");
-const originalJpgPath = path.join(root, "public/brand/tsss-emblem-original.jpg");
 const jpgPath = path.join(root, "public/brand/tsss-emblem.jpg");
 
 const TARGET = 1024;
@@ -50,11 +51,9 @@ const emblem = await sharp(badge)
 
 await writeFile(outputPath, emblem);
 
-/* JPEG copies: JPG has no alpha, so the badge is flattened onto white. */
-await writeFile(originalJpgPath, await sharp(originalPath).jpeg({ quality: 96, chromaSubsampling: "4:4:4" }).toBuffer());
+/* JPEG copy: JPG has no alpha, so the badge is flattened onto white. */
 await writeFile(jpgPath, await sharp(emblem).flatten({ background: "#ffffff" }).jpeg({ quality: 95, chromaSubsampling: "4:4:4" }).toBuffer());
 
 console.log(`emblem: ${width}x${height} png (from ${info.width}x${info.height} artwork)`);
 console.log("wrote public/brand/tsss-emblem.png");
-console.log("wrote public/brand/tsss-emblem-original.jpg");
 console.log("wrote public/brand/tsss-emblem.jpg");

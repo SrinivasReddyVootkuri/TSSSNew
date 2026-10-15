@@ -205,7 +205,7 @@ const { default: ts } = await import("typescript");
 const { readFile: readFs } = await import("node:fs/promises");
 const { default: nodePath } = await import("node:path");
 const { pathToFileURL } = await import("node:url");
-const { mkdtemp, writeFile } = await import("node:fs/promises");
+const { writeFile } = await import("node:fs/promises");
 
 const root = nodePath.resolve(process.cwd());
 const rlSource = await readFs(nodePath.join(root, "src", "lib", "security", "rate-limit.ts"), "utf8");

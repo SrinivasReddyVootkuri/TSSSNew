@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Us | Srinivasula Seva Samstha",
     description:
-      "The mission, vision and activities of Srinivasula Seva Samstha, a non-profit community trust.",
+      "The mission, vision and activities of Srinivasula Seva Samstha, a Non-profit organization.",
     url: "/about",
   },
 };
@@ -85,7 +85,7 @@ export default async function AboutPage() {
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70">
               {intro?.body ??
                 settings.about_short ??
-                "A non-profit community trust bringing Srinivas families together through devotion, education and service."}
+                "A Non-profit organization bringing Srinivas families together through devotion, education and service."}
             </p>
             {settings.tagline ? (
               <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold-400/25 bg-gold-400/10 px-4 py-1.5 text-xs font-semibold tracking-[0.16em] text-gold-200 uppercase">

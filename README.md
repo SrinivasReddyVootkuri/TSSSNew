@@ -1,7 +1,7 @@
 # Srinivasula Seva Samstha (TSSS) — website
 
 A modern, responsive website and admin platform for **Srinivasula Seva Samstha**, a
-non-profit community trust. Devotional programmes, education, community service and
+Non-profit organization . Devotional programmes, education, community service and
 blood assistance — managed entirely by trust administrators, with no technical
 knowledge required.
 
@@ -282,13 +282,12 @@ social share image.
 
 | File | Size | Use |
 | --- | --- | --- |
-| `tsss-emblem-original.jpg` | 213x226 | Exact logo as JPG - **the logo the site loads** |
-| `tsss-emblem-original.png` | 213x226 | Untouched master artwork |
-| `tsss-emblem.jpg` | 1024x1019 | Same logo upscaled, on white, for print and documents |
-| `tsss-emblem.png` | 1024x1019 | Same logo, circular with transparent corners |
+| `tsss-emblem-original.jpg` | 1240x1209 | Exact logo as JPG - **the logo the site loads** |
+| `tsss-emblem.jpg` | 1024x1023 | Same logo on white, for print and documents |
+| `tsss-emblem.png` | 1024x1023 | Same logo, circular with transparent corners |
 
-`npm run brand:emblem` regenerates all four from `tsss-emblem-original.png` (trim, round into
-the badge circle, upscale to 1024px). Drop a new master at `tsss-emblem-original.png` or
+`npm run brand:emblem` regenerates the two derivatives from `tsss-emblem-original.jpg`
+(trim, round into the badge circle, scale to 1024px). Drop a new master at
 `tsss-emblem-original.jpg` and re-run `npm run brand:emblem && npm run brand:icons`.
 
 The site loads the exact JPG everywhere the logo appears; `tsss-emblem.png` and
