@@ -68,7 +68,7 @@ export default async function BloodHelpRequestsPage({
   return (
     <>
       <AdminPageHeader
-        title="Blood help requests"
+        title="Blood donation requests"
         description="Requests are routed automatically to the district or area administrator. Unassigned requests are flagged for the central team."
       />
 
@@ -120,7 +120,7 @@ export default async function BloodHelpRequestsPage({
 
       {requests.length === 0 ? (
         <div className="surface-card p-10 text-center text-sm text-slate-500">
-          No blood help requests found.
+          No blood donation requests found.
         </div>
       ) : (
         <div className="space-y-4">

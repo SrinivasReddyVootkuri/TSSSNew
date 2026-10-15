@@ -29,10 +29,10 @@ console.log("\n1. Public pages");
 const home = await get("/");
 check("home returns 200", home.status === 200, String(home.status));
 check("home shows the organisation name", home.body.includes("Srinivasula Seva Samstha"));
-check("home has the primary CTAs", ["Register Now", "Blood Help", "Donate"].every((label) => home.body.includes(label)));
+check("home has the primary CTAs", ["Register Now", "Blood Donations", "Donate"].every((label) => home.body.includes(label)));
 check("home renders seeded events", home.body.includes("Upcoming programmes") || home.body.includes("Kalyanotsavam"));
 check("home shows live impact statistics", home.body.includes("Registered Members"));
-check("home includes the blood help CTA", home.body.includes("Need Blood Help?"));
+check("home includes the blood donations CTA", home.body.includes("Need Blood Donations?"));
 
 for (const [path, expected] of [
   ["/about", "About the trust"],
@@ -42,7 +42,7 @@ for (const [path, expected] of [
   ["/media", "Media"],
   ["/blogs", "Blogs"],
   ["/register", "Register with TSSS"],
-  ["/blood-help", "Need Blood Help?"],
+  ["/blood-donations", "Need Blood Donations?"],
   ["/photo-booth", "TSSS Photo Booth"],
 ]) {
   const page = await get(path);
@@ -106,7 +106,15 @@ check("robots.txt is served", robots.status === 200, String(robots.status));
 
 const sitemap = await get("/sitemap.xml");
 check("sitemap is served", sitemap.status === 200, String(sitemap.status));
-check("sitemap lists public routes", sitemap.body.includes("/register") && sitemap.body.includes("/blood-help"));
+check("sitemap lists public routes", sitemap.body.includes("/register") && sitemap.body.includes("/blood-donations"));
+
+const legacyBlood = await get("/blood-help");
+check(
+  "old /blood-help route redirects to /blood-donations",
+  [301, 302, 307, 308].includes(legacyBlood.status) &&
+    (legacyBlood.location ?? "").includes("/blood-donations"),
+  `${legacyBlood.status} -> ${legacyBlood.location ?? "(nowhere)"}`,
+);
 
 const head = home.body.slice(0, 4000);
 check("page has an Open Graph title", head.includes('property="og:title"') || home.body.includes('property="og:title"'));

@@ -197,7 +197,7 @@ export async function registerMember(
 }
 
 /* -------------------------------------------------------------------------- */
-/* Blood help                                                                 */
+/* Blood donations                                                          */
 /* -------------------------------------------------------------------------- */
 
 export async function submitBloodHelpRequest(
@@ -216,7 +216,7 @@ export async function submitBloodHelpRequest(
     return {
       status: "error",
       message:
-        "Too many blood help requests from this device. Please call the helpline if this is urgent.",
+        "Too many blood donation requests from this device. Please call the helpline if this is urgent.",
     };
   }
 
@@ -337,7 +337,7 @@ export async function submitBloodHelpRequest(
 /**
  * Registers somebody as willing to donate blood.
  *
- * Unlike the emergency blood help form, this creates no notifications and no
+ * Unlike the emergency blood donations form, this creates no notifications and no
  * routing. It records intent, so the dashboard and the administrators know who
  * to call when a matching request arrives.
  */

@@ -20,7 +20,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 /**
  * Donation requests are the non-emergency queue: a planned transfusion, a camp
- * follow-up, a scheduled surgery. Emergencies keep going through Blood Help,
+ * follow-up, a scheduled surgery. Emergencies keep going through Blood Donations,
  * which routes and notifies automatically. Nothing here sends notifications.
  */
 export default async function DonationRequestsPage({
@@ -53,7 +53,7 @@ export default async function DonationRequestsPage({
     <>
       <AdminPageHeader
         title="Donation requests"
-        description="Planned, non-emergency requests. For emergencies use Blood Help, which notifies volunteers automatically."
+        description="Planned, non-emergency requests. For emergencies use Blood Donations, which notifies volunteers automatically."
       />
 
       <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Filter by status">

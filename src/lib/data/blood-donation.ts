@@ -2,7 +2,7 @@
  * Blood donation dashboard metrics.
  *
  * Read through the request-scoped client so Row Level Security applies: only
- * roles that may manage blood help see these numbers. Areas are derived from
+ * roles that may manage blood donations see these numbers. Areas are derived from
  * the records themselves rather than a fixed list, so a camp in a new city
  * appears without any configuration.
  */

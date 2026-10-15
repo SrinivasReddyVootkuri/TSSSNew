@@ -13,7 +13,7 @@ const ROLE_LABELS: Record<string, string> = {
   super_admin: "Super Admin",
   admin: "Admin",
   content_manager: "Content Manager",
-  blood_help_manager: "Blood Help Manager",
+  blood_help_manager: "Blood Donations Manager",
 };
 
 export default async function UsersPage() {
@@ -44,7 +44,7 @@ export default async function UsersPage() {
             <strong>Content Manager</strong> — website content, events, media, blogs and registrations.
           </li>
           <li>
-            <strong>Blood Help Manager</strong> — blood requests, districts and administrators.
+            <strong>Blood Donations Manager</strong> — blood requests, districts and administrators.
           </li>
         </ul>
       </div>

@@ -45,7 +45,7 @@ export function ImpactStats({
             registration is free, and every family registered strengthens the trust network.
           </p>
           <ButtonLink href="/register" size="sm" className="shrink-0">
-            Register Your Family
+            Get Registered 
           </ButtonLink>
         </div>
       </div>

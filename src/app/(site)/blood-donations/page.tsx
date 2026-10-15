@@ -6,15 +6,15 @@ import { getAreas, getDistricts, getSiteSettings } from "@/lib/data/public";
 import { BLOOD_GROUPS } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Blood Help",
+  title: "Blood Donations",
   description:
     "Request emergency blood assistance from Srinivasula Seva Samstha. Requests are routed to district volunteers by district and area for the fastest response.",
-  alternates: { canonical: "/blood-help" },
+  alternates: { canonical: "/blood-donations" },
   openGraph: {
-    title: "Need Blood Help? | Srinivasula Seva Samstha",
+    title: "Need Blood Donations? | Srinivasula Seva Samstha",
     description:
       "Submit a blood request and our district volunteer is notified immediately. Free emergency blood coordination for the community.",
-    url: "/blood-help",
+    url: "/blood-donations",
   },
 };
 
@@ -55,10 +55,10 @@ export default async function BloodHelpPage() {
               Emergency assistance
             </span>
             <h1 className="mt-6 text-4xl leading-tight font-semibold text-balance sm:text-5xl">
-              Need Blood Help?
+              Need Blood Donations?
             </h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-white/70">
-              Our blood help network connects patients with willing donors across the community. Submit a request and
+              Our blood donation network connects patients with willing donors across the community. Submit a request and
               the volunteer responsible for your district is alerted by email and WhatsApp straight away.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -116,7 +116,7 @@ export default async function BloodHelpPage() {
         <div className="container-page grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <div className="surface-card p-6 sm:p-8">
-              <h2 className="font-display text-2xl font-semibold text-ink-900">Blood help request</h2>
+              <h2 className="font-display text-2xl font-semibold text-ink-900">Blood donation request</h2>
               <p className="mt-1.5 text-sm text-slate-600">
                 Fields marked <span className="text-red-600">*</span> are required. All fields marked optional can be
                 filled later.

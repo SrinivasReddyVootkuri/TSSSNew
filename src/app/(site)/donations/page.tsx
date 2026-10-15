@@ -137,7 +137,7 @@ export default async function DonationsPage() {
               </p>
               <ul className="mt-5 space-y-2 text-sm text-slate-700">
                 <li>• No payment is collected on this website — every method below is arranged directly with the trust.</li>
-                <li>• Registration, blood help and event participation are free of charge.</li>
+                <li>• Registration, blood donations and event participation are free of charge.</li>
                 <li>• Receipts are issued on request by the administration.</li>
               </ul>
             </div>
@@ -207,7 +207,7 @@ export default async function DonationsPage() {
             <div className="surface-card p-6">
               <h2 className="font-display text-lg font-semibold text-ink-900">Prefer to help directly?</h2>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                Volunteers are always welcome — for event service, teaching, distribution work or the blood help desk.
+                Volunteers are always welcome — for event service, teaching, distribution work or the blood donations desk.
               </p>
               <ButtonLink href="/register" variant="secondary" className="mt-5">
                 Register as a volunteer

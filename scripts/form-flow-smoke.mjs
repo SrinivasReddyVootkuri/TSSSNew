@@ -203,8 +203,8 @@ async function run() {
   check("invalid input is rejected", invalid.text.includes("Please correct the highlighted fields"));
   check("field level messages are rendered", invalid.text.includes("Please enter your full name."));
 
-  console.log("\n4. Blood help form");
-  const bloodHtml = await (await fetch(`${BASE}/blood-help`)).text();
+  console.log("\n4. Blood donations form");
+  const bloodHtml = await (await fetch(`${BASE}/blood-donations`)).text();
   const bloodForm = readForm(bloodHtml);
   const { data: district } = await admin
     .from("districts")
@@ -218,7 +218,7 @@ async function run() {
     .eq("slug", "karimnagar-city")
     .maybeSingle();
 
-  const blood = await submit("/blood-help", bloodForm.form, bloodForm.hidden, {
+  const blood = await submit("/blood-donations", bloodForm.form, bloodForm.hidden, {
     requesterName: bloodRequester,
     mobileNumber: "9876500022",
     bloodGroup: "B+",
@@ -234,7 +234,7 @@ async function run() {
     website: "",
   });
 
-  check("blood help submission returns a rendered response", blood.status === 200, String(blood.status));
+  check("blood donation submission returns a rendered response", blood.status === 200, String(blood.status));
   check("confirmation screen is rendered", blood.text.includes("Request Submitted"));
   check("reference number is shown", /BH\d{6}/.test(blood.text));
 
@@ -243,7 +243,7 @@ async function run() {
     .select("id, request_number, status, is_unassigned, blood_group")
     .eq("requester_name", bloodRequester)
     .maybeSingle();
-  check("blood help request stored", Boolean(requestRow), JSON.stringify(requestRow ?? {}));
+  check("blood donation request stored", Boolean(requestRow), JSON.stringify(requestRow ?? {}));
   check("request routed to the area administrator", requestRow?.is_unassigned === false);
   check("request starts as NEW", requestRow?.status === "NEW");
 

@@ -188,7 +188,7 @@ export default async function AdminDashboardPage() {
 
         <div className="surface-card overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4">
-            <h2 className="font-display text-lg font-semibold text-ink-900">Latest blood help requests</h2>
+            <h2 className="font-display text-lg font-semibold text-ink-900">Latest blood donation requests</h2>
             <Link
               href="/admin/blood-help/requests"
               className="text-xs font-semibold text-gold-700 hover:text-gold-600"
@@ -225,7 +225,7 @@ export default async function AdminDashboardPage() {
                 {(openRequestRows.data ?? []).length === 0 ? (
                   <tr>
                     <td colSpan={4} className="py-8 text-center text-slate-500">
-                      No blood help requests yet.
+                      No blood donation requests yet.
                     </td>
                   </tr>
                 ) : null}

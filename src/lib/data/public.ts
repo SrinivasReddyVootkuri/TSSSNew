@@ -353,7 +353,7 @@ export async function getImpactStats(): Promise<
     {
       label: "Registered Members",
       value: members.count ?? 0,
-      description: "Srinivas families registered with the trust",
+      description: "Srinivas's registered with the trust",
     },
     {
       label: "Events Conducted",
@@ -368,7 +368,7 @@ export async function getImpactStats(): Promise<
     {
       label: "Blood Assistance",
       value: bloodRequests.count ?? 0,
-      description: "Blood help requests coordinated",
+      description: "Blood donation requests coordinated",
     },
     {
       label: "Community Stories",
@@ -384,7 +384,7 @@ export async function getImpactStats(): Promise<
 }
 
 /* -------------------------------------------------------------------------- */
-/* Blood help reference data                                                  */
+/* Blood donation reference data                                                  */
 /* -------------------------------------------------------------------------- */
 
 export async function getDistricts(): Promise<DistrictRow[]> {

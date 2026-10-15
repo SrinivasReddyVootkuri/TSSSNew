@@ -61,7 +61,7 @@ const NAV: NavGroup[] = [
     ],
   },
   {
-    title: "Blood Help",
+    title: "Blood Donations",
     items: [
       { href: "/admin/blood-help/requests", label: "Requests", minimum: "blood_help_manager" },
       { href: "/admin/blood-help/districts", label: "Districts / Areas", minimum: "blood_help_manager" },
@@ -70,7 +70,7 @@ const NAV: NavGroup[] = [
     ],
   },
   {
-    title: "Blood Donation",
+    title: "Blood Donors",
     items: [
       { href: "/admin/blood-donation", label: "Dashboard", minimum: "blood_help_manager" },
       { href: "/admin/blood-donation/donors", label: "Donors", minimum: "blood_help_manager" },

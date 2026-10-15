@@ -57,7 +57,7 @@ export default async function BloodHelpAdministratorsPage({
   return (
     <>
       <AdminPageHeader
-        title="Blood help administrators"
+        title="Blood donation administrators"
         description="Assign a responsible volunteer per district or area. If an area has no administrator, the district level one is used, and finally the central team."
         action={
           <Link
@@ -133,7 +133,7 @@ export default async function BloodHelpAdministratorsPage({
         ]}
         rows={adminList}
         rowKey={(row) => row.id}
-        empty="No blood help administrators configured yet."
+        empty="No blood donation administrators configured yet."
       />
 
       <AdminSection

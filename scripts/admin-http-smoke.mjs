@@ -79,7 +79,7 @@ const dashboard = await get("/admin");
 check("dashboard renders", dashboard.status === 200, String(dashboard.status));
 check("dashboard shows the signed-in email", dashboard.body.includes(email));
 check("dashboard shows member statistics", dashboard.body.includes("Total Members"));
-check("dashboard shows blood help statistics", dashboard.body.includes("Open Blood Requests"));
+check("dashboard shows blood donation statistics", dashboard.body.includes("Open Blood Requests"));
 check("admin navigation is present", dashboard.body.includes("Registered Members"));
 
 console.log("\n2. Admin sections");
@@ -99,9 +99,9 @@ const pages = [
   ["/admin/blogs/approved", "Approved"],
   ["/admin/registrations", "Registered members"],
   ["/admin/registrations/export", "Export registrations"],
-  ["/admin/blood-help/requests", "Blood help requests"],
+  ["/admin/blood-help/requests", "Blood donation requests"],
   ["/admin/blood-help/districts", "Districts &amp; areas"],
-  ["/admin/blood-help/administrators", "Blood help administrators"],
+  ["/admin/blood-help/administrators", "Blood donation administrators"],
   ["/admin/blood-help/notifications", "Notification logs"],
   ["/admin/settings", "Organization &amp; contact settings"],
   ["/admin/users", "Team &amp; roles"],

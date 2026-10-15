@@ -18,7 +18,7 @@ const ROLE_LABELS: Record<AppRole, string> = {
   super_admin: "Super Admin",
   admin: "Admin",
   content_manager: "Content Manager",
-  blood_help_manager: "Blood Help Manager",
+  blood_help_manager: "Blood Donations Manager",
 };
 
 /**

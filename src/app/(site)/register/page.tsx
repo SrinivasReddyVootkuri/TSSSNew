@@ -6,7 +6,7 @@ import { getSiteSettings } from "@/lib/data/public";
 export const metadata: Metadata = {
   title: "Register",
   description:
-    "Register your family with Srinivasula Seva Samstha and receive a unique registration number. Registration is free and there is no mandatory donation.",
+    "Get Registered  with Srinivasula Seva Samstha and receive a unique registration number. Registration is free and there is no mandatory donation.",
   alternates: { canonical: "/register" },
   openGraph: {
     title: "Register | Srinivasula Seva Samstha",

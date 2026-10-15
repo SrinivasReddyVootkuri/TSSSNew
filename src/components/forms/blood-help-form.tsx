@@ -68,7 +68,7 @@ export function BloodHelpForm({
             </p>
           </div>
           <a
-            href="/blood-help"
+            href="/blood-donations"
             className="mt-5 inline-flex h-11 items-center justify-center rounded-full border border-brand-200 bg-white px-5 text-sm font-semibold text-ink-800 transition-colors hover:border-gold-400 hover:text-gold-700"
           >
             Submit another request
@@ -89,12 +89,12 @@ export function BloodHelpForm({
 
       {!bloodHelpOpen ? (
         <p role="status" className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-          The online blood help form is temporarily unavailable. Please contact the administration by phone.
+          The online blood donations form is temporarily unavailable. Please contact the administration by phone.
         </p>
       ) : null}
 
       <fieldset className="space-y-6" disabled={!bloodHelpOpen}>
-        <legend className="sr-only">Blood help request details</legend>
+        <legend className="sr-only">Blood donation request details</legend>
 
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
@@ -271,7 +271,7 @@ export function BloodHelpForm({
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <SubmitButton label="Submit Blood Help Request" pendingLabel="Submitting request…" />
+          <SubmitButton label="Submit Blood Donation Request" pendingLabel="Submitting request…" />
           <p className="text-xs leading-relaxed text-slate-500">
             We share only the essential details with the volunteer assigned to your district. Please do not include
             unnecessary personal information.

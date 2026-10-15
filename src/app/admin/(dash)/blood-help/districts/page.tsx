@@ -47,7 +47,7 @@ export default async function DistrictsAdminPage({
     <>
       <AdminPageHeader
         title="Districts & areas"
-        description="These values power the Blood Help form and request routing. Nothing is hard-coded in the website."
+        description="These values power the Blood Donations form and request routing. Nothing is hard-coded in the website."
       />
 
       <AdminSection

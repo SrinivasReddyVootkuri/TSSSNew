@@ -143,10 +143,10 @@ export function HelpingHands() {
     {
       title: "Blood Assistance Network",
       description:
-        "District-wise volunteers who respond to blood requests within hours, coordinated from our blood help desk.",
+"District-wise volunteers who respond to blood requests within hours, coordinated from our blood donations desk.",
       icon: "M10 3.2s-5.5 3.4-5.5 7a5.5 5.5 0 0 0 11 0c0-3.6-5.5-7-5.5-7Zm0 9.3a2.3 2.3 0 0 1-2.3-2.3c0-1.4 2.3-3.3 2.3-3.3s2.3 1.9 2.3 3.3a2.3 2.3 0 0 1-2.3 2.3Z",
-      href: "/blood-help",
-      cta: "Request Blood Help",
+      href: "/blood-donations",
+      cta: "Request Blood Donations",
     },
     {
       title: "Education & Pen Distribution",
@@ -405,7 +405,7 @@ export function BloodHelpCta() {
           Emergency assistance
         </span>
         <h2 className="mx-auto mt-6 max-w-3xl text-4xl leading-tight font-semibold text-balance sm:text-5xl">
-          Need Blood Help?
+          Need Blood Donations?
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
           Submit a request and our district volunteer is notified immediately. Requests are routed by district and
@@ -413,10 +413,10 @@ export function BloodHelpCta() {
         </p>
         <div className="mt-9 flex flex-wrap justify-center gap-3">
           <a
-            href="/blood-help"
+            href="/blood-donations"
             className="inline-flex h-13 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-red-600 px-8 text-base font-semibold text-white shadow-[0_14px_36px_-14px_rgba(244,63,94,0.9)] transition-transform hover:scale-[1.02]"
           >
-            Request Blood Help
+            Request Blood Donations
           </a>
           <ButtonLink href="/events/helping-hands" size="lg" variant="onDark">
             How it works
@@ -441,7 +441,7 @@ export function RegistrationCta({ open }: { open: boolean }) {
           <div className="relative mx-auto max-w-2xl">
             <p className="text-xs font-semibold tracking-[0.22em] text-gold-300 uppercase">Membership</p>
             <h2 className="mt-4 text-3xl leading-tight font-semibold text-balance sm:text-4xl">
-              Register your family with Srinivasula Seva Samstha
+              Get Registered  with Srinivasula Seva Samstha
             </h2>
             <p className="mt-4 text-base leading-relaxed text-white/70">
               Registration is <span className="font-semibold text-gold-200">free</span> and takes under a minute. You

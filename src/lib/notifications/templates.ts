@@ -1,5 +1,5 @@
 /**
- * Message templates for blood help notifications.
+ * Message templates for blood donation notifications.
  *
  * Only the information a volunteer needs to act is included - no unrelated
  * personal data.
@@ -23,8 +23,8 @@ export type BloodHelpDetails = {
 
 export function buildEmailSubject(details: BloodHelpDetails, unassigned: boolean): string {
   return unassigned
-    ? `[TSSS UNASSIGNED] Blood help ${details.bloodGroup} - ${details.hospitalName} - ${details.requestNumber}`
-    : `[TSSS Blood Help] ${details.bloodGroup} required - ${details.hospitalName} - ${details.requestNumber}`;
+    ? `[TSSS UNASSIGNED] Blood donations ${details.bloodGroup} - ${details.hospitalName} - ${details.requestNumber}`
+    : `[TSSS Blood Donations] ${details.bloodGroup} required - ${details.hospitalName} - ${details.requestNumber}`;
 }
 
 export function buildEmailBody(details: BloodHelpDetails, unassigned: boolean): string {
@@ -34,8 +34,8 @@ export function buildEmailBody(details: BloodHelpDetails, unassigned: boolean): 
 
   return [
     unassigned
-      ? "No blood help administrator is configured for this area, so this request is being sent to the central team."
-      : "A blood help request has been assigned to you by district/area.",
+      ? "No blood donation administrator is configured for this area, so this request is being sent to the central team."
+      : "A blood donation request has been assigned to you by district/area.",
     "",
     `Request ID: ${details.requestNumber}`,
     `Requester: ${details.requesterName}`,
@@ -61,7 +61,7 @@ export function buildWhatsAppBody(details: BloodHelpDetails, unassigned: boolean
     .join(", ");
 
   return [
-    `TSSS Blood Help Request${unassigned ? " (UNASSIGNED)" : ""}`,
+    `TSSS Blood Donation Request${unassigned ? " (UNASSIGNED)" : ""}`,
     `Request: ${details.requestNumber}`,
     `Blood Group: ${details.bloodGroup}`,
     `Units: ${details.unitsRequired}`,

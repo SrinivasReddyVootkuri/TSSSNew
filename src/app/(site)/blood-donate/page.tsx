@@ -37,8 +37,8 @@ export default function BloodDonatePage() {
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/70">
             One registration puts you on the donor roll. When a patient nearby needs your blood
             group, a volunteer calls you directly. Need blood urgently instead?{" "}
-            <a href="/blood-help" className="font-semibold text-gold-300 underline underline-offset-2">
-              Request blood help
+            <a href="/blood-donations" className="font-semibold text-gold-300 underline underline-offset-2">
+              Request blood donations
             </a>
             .
           </p>
@@ -84,7 +84,7 @@ export default function BloodDonatePage() {
                 <li>• Most adults can donate every three months.</li>
                 <li>• If you do not know your blood group, choose &ldquo;I Don&rsquo;t Know&rdquo; — the trust will arrange a free test for you.</li>
               </ul>
-              <ButtonLink href="/blood-help" variant="secondary" className="mt-5">
+              <ButtonLink href="/blood-donations" variant="secondary" className="mt-5">
                 I need blood urgently
               </ButtonLink>
             </div>

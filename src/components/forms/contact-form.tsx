@@ -177,7 +177,7 @@ export function ContactForm() {
         <SubmitButton label="Send message" pendingLabel="Sending…" disabled={status === "sending"} />
         <p className="flex items-center gap-1.5 text-xs text-slate-500">
           {status === "sending" ? <Spinner className="size-3.5" /> : null}
-          We reply to email only. Emergency blood requests should use the blood help form.
+          We reply to email only. Emergency blood requests should use the blood donations form.
         </p>
       </div>
     </form>

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Events | Srinivasula Seva Samstha",
     description:
-      "All programmes organised by the trust: devotional events, community service, education and blood help drives.",
+      "All programmes organised by the trust: devotional events, community service, education and blood donation drives.",
     url: "/events",
   },
 };

@@ -19,7 +19,7 @@ no technical knowledge is assumed.
 6. [Media](#6-media)
 7. [Blogs](#7-blogs)
 8. [Register as a member](#8-register-as-a-member)
-9. [Blood help](#9-blood-help)
+9. [Blood donations](#9-blood-donations)
 10. [Photo booth](#10-photo-booth)
 
 **Part 2 — For administrators**
@@ -32,7 +32,7 @@ no technical knowledge is assumed.
 17. [Media](#17-media)
 18. [Blogs](#18-blogs)
 19. [Registrations](#19-registrations)
-20. [Blood help](#20-blood-help)
+20. [Blood donations](#20-blood-donations)
 20A. [Blood donation](#20a-blood-donation)
 21. [Photo booth](#21-photo-booth)
 22. [Settings](#22-settings)
@@ -63,7 +63,7 @@ main menu inline; on a phone, tap the **Menu** button (three lines, top right) t
 | Donations | Bank and UPI details to give money |
 | Media | Videos and press coverage |
 | Blogs | Community articles, plus a form to submit your own |
-| Blood Help | Emergency blood request form |
+| Blood Donations | Emergency blood request form |
 | Photo Booth | Create and download a photo with your friends |
 
 Two buttons sit alongside the menu on every page:
@@ -84,7 +84,7 @@ end dates if those are set.
 The home page is a scroll of sections:
 
 1. **Hero** — the trust name, the tagline "Service · Devotion · Unity", the emblem, and four
-   buttons: Register Now, Blood Help, Upcoming Events, Donate. If a programme is coming up, a
+   buttons: Register Now, Blood Donations, Upcoming Events, Donate. If a programme is coming up, a
    "Next programme" card links to it.
 2. **About TSSS** — a short introduction, our mission and vision, and a Learn More button.
 3. **Upcoming Events** — the next three events.
@@ -101,7 +101,7 @@ The home page is a scroll of sections:
 6. **Photo Booth** — an invitation to the studio (hidden if no templates are active).
 7. **Latest Blogs** — the three most recent articles.
 8. **Media** — the latest videos and press.
-9. **Blood help** — a call to register as a donor.
+9. **Blood donations** — a call to register as a donor.
 10. **Registration** — a call to join.
 
 ---
@@ -140,7 +140,7 @@ Two things to know about this form:
   the destination inbox. Until somebody clicks that link, **all messages are silently
   discarded**.
 
-For emergencies, use the [blood help form](#9-blood-help) or telephone the trust — do not use
+For emergencies, use the [blood donations form](#9-blood-donations) or telephone the trust — do not use
 the contact form.
 
 ---
@@ -210,7 +210,7 @@ featured card at the top.
 **Finding articles**
 
 - **Category buttons** across the top filter by topic. Categories come from published
-  articles (General, Devotional, Community Service, Education, Blood Help, Announcements).
+  articles (General, Devotional, Community Service, Education, Blood Donations, Announcements).
 - **Search** — type a word in the search box. It looks in article titles, summaries and body
   text. Press Enter.
 - **Pages** — six articles per page, with numbered buttons at the bottom.
@@ -302,9 +302,9 @@ group, date of birth, gender and age, with the organisation's phone and email at
 
 ---
 
-## 9. Blood help
+## 9. Blood donations
 
-**/blood-help** is the fastest way to ask for emergency blood. This is the most important
+**/blood-donations** is the fastest way to ask for emergency blood. This is the most important
 form on the site.
 
 **In a real emergency, telephone the nearest blood bank or hospital as well.** Do not wait for
@@ -495,14 +495,14 @@ Four roles, each unlocking everything below it:
 
 | Role | Can do |
 | --- | --- |
-| **Blood Help Manager** | Blood requests, districts, areas, administrators, notification logs |
+| **Blood Donations Manager** | Blood requests, districts, areas, administrators, notification logs |
 | **Content Manager** | Everything above, plus website content, events, donations, media, photo booth, blogs and registrations |
 | **Admin** | Everything above, plus organisation and contact settings |
 | **Super Admin** | Everything, plus Team & Roles and the Audit Log |
 
 ### Who can reach what
 
-| Section | Blood Help Mgr | Content Mgr | Admin | Super Admin |
+| Section | Blood Donations Mgr | Content Mgr | Admin | Super Admin |
 | --- | :-: | :-: | :-: | :-: |
 | Dashboard | ✔ | ✔ | ✔ | ✔ |
 | Banner, Homepage & About content | | ✔ | ✔ | ✔ |
@@ -511,7 +511,7 @@ Four roles, each unlocking everything below it:
 | YouTube, News, Photo Booth | | ✔ | ✔ | ✔ |
 | Blog queues | | ✔ | ✔ | ✔ |
 | Registered Members, Export | | ✔ | ✔ | ✔ |
-| Blood Help (all four pages) | ✔ | ✔ | ✔ | ✔ |
+| Blood Donations (all four pages) | ✔ | ✔ | ✔ | ✔ |
 | Organisation & Contact settings | | | ✔ | ✔ |
 | Team & Roles | | | | ✔ |
 | Audit Log | | | | ✔ |
@@ -843,7 +843,7 @@ your filters across.
 
 ---
 
-## 20. Blood help
+## 20. Blood donations
 
 ### Requests — `/admin/blood-help/requests`
 
@@ -936,7 +936,7 @@ If a channel is switched off in settings, its attempts are logged as **Skipped**
 
 ## 20A. Blood donation
 
-Separate from emergency Blood Help above: this module tracks **willing donors** and
+Separate from emergency Blood Donations above: this module tracks **willing donors** and
 **planned donations** — camps, regular donors and scheduled needs. It sends no automatic
 notifications. When a matching request arrives, a volunteer calls the donor.
 
@@ -1092,9 +1092,9 @@ across the whole site.
 | Field | Notes |
 | --- | --- |
 | Registration form open | Untick to pause registrations. Visitors see a notice instead |
-| Blood help form open | Untick to pause blood requests. The form is disabled |
+| Blood donations form open | Untick to pause blood requests. The form is disabled |
 | Registration paused message | Optional custom wording |
-| Blood help paused message | Optional custom wording |
+| Blood donations paused message | Optional custom wording |
 
 **Notifications**
 
@@ -1226,7 +1226,7 @@ select public.clear_login_failures('admin-login:account:<email>');
 | Form | Limit |
 | --- | --- |
 | Registration | 8 attempts per hour per device |
-| Blood help | 5 requests per hour per device |
+| Blood donations | 5 requests per hour per device |
 | Donor registration | 5 per day per device |
 | Blog submission | 3 per day per device |
 | Contact form | No application-side limit (FormSubmit applies its own) |
@@ -1332,7 +1332,7 @@ Worth knowing so nobody is surprised:
 - **Images cannot be deleted** from a record once uploaded.
 - **Lists are capped** (see [Limits](#25-limits-and-quotas)); beyond the cap, older records are
   simply not listed.
-- **The blood help form has no public status tracking.** Reference numbers are the only handle.
+- **The blood donations form has no public status tracking.** Reference numbers are the only handle.
 - **Notification test buttons are Super Admin only**, though the buttons render for Admins.
 - **The template named "Four Photo Collage" has three photo windows.** Rename it if that
   bothers visitors.

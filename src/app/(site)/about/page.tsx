@@ -181,7 +181,7 @@ export default async function AboutPage() {
               align="left"
               eyebrow="Leadership"
               title="Trust members &amp; volunteers"
-              description="The trust is served by elected members and volunteers who oversee programmes, finances and the blood help network."
+              description="The trust is served by elected members and volunteers who oversee programmes, finances and the blood donation network."
             />
             {leadership?.body ? (
               <p className="mt-5 text-sm leading-relaxed text-slate-600">{leadership.body}</p>
@@ -234,8 +234,8 @@ export default async function AboutPage() {
                 For registration help, donation receipts, blood assistance or volunteering, contact the trust
                 administration.
               </p>
-              <ButtonLink href="/blood-help" className="mt-6">
-                Request blood help
+              <ButtonLink href="/blood-donations" className="mt-6">
+                Request blood donations
               </ButtonLink>
 
               <dl className="mt-8 grid gap-5 sm:grid-cols-2">

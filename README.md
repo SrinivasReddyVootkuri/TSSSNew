@@ -129,7 +129,7 @@ administrators are created in **Admin → Team & Roles**.
 | Media → YouTube / News | Video links and press coverage |
 | Blogs → Pending/Approved/Rejected | Review, edit, approve, reject, feature, delete |
 | Registrations | Server-side search, sort, filter, pagination, view, edit, disable/activate, CSV export |
-| Blood Help → Requests / Districts / Administrators / Notification logs | Status workflow, district & area management, routing configuration, delivery status + retry |
+| Blood Donations → Requests / Districts / Administrators / Notification logs | Status workflow, district & area management, routing configuration, delivery status + retry |
 | Settings | Organization, contact, social links, form availability, notification toggles |
 | Team & Roles, Audit Log | Super Admin only |
 
@@ -144,7 +144,7 @@ and every admin page/action re-verifies the session server-side.
 ## 5. Public features
 
 - **Home** — hero with the trust emblem, about, upcoming events, live impact
-  statistics, initiatives, photo booth entry, latest blogs, media, blood help CTA,
+  statistics, initiatives, photo booth entry, latest blogs, media, blood donations CTA,
   registration CTA.
 - **Events** — admin-managed categories, event pages with gallery, YouTube embed,
   external links and JSON-LD `Event` structured data.
@@ -156,7 +156,7 @@ and every admin page/action re-verifies the session server-side.
 - **Register** — Full Name, Date of Birth, Village, Mobile Number (plus optional
   email). Duplicate check on **name + date of birth**, unique `TSSS000123` number,
   printable/downloadable confirmation.
-- **Blood Help** — request form with district → area cascading (values come from the
+- **Blood Donations** — request form with district → area cascading (values come from the
   database, never hard-coded), routing to the responsible administrator, email +
   WhatsApp notification with logging, `BH000123` reference numbers, and status
   tracking `NEW → CONTACTED → IN_PROGRESS → RESOLVED → CLOSED`.
@@ -333,7 +333,7 @@ npm run test:db                                   # 35 checks: RLS, duplicates,
                                                    # concurrent numbering, routing, auth
 npm run test:http                                 # 44 checks: public pages, SEO, 404, protection
 npm run test:admin  -- email password              # 52 checks: every admin page + CSV export
-npm run test:forms                                # 23 checks: register / blood help / blog
+npm run test:forms                                # 29 checks: register / blood donations / donor / blog
                                                    # submissions through the real forms
 npm run test:admin-actions -- email password      # 22 checks: banner, events, gallery,
                                                    # blog approval, member disable, audit

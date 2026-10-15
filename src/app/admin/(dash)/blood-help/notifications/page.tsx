@@ -40,7 +40,7 @@ export default async function NotificationLogsPage({
     <>
       <AdminPageHeader
         title="Notification logs"
-        description="Every email and WhatsApp alert triggered by a blood help request, with its delivery status."
+        description="Every email and WhatsApp alert triggered by a blood donation request, with its delivery status."
       />
 
       <nav aria-label="Notification status" className="mb-5 flex flex-wrap gap-2">

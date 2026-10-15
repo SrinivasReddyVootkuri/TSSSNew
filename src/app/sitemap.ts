@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/blogs`, changeFrequency: "daily", priority: 0.8 },
     { url: `${SITE_URL}/photo-booth`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/register`, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${SITE_URL}/blood-help`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/blood-donations`, changeFrequency: "monthly", priority: 0.9 },
   ];
 
   const categoryRoutes: MetadataRoute.Sitemap = categories.map((category) => ({

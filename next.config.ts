@@ -37,6 +37,13 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  async redirects() {
+    return [
+      // The emergency request page moved from /blood-help to /blood-donations.
+      // Permanent redirect so bookmarks and shared links keep working.
+      { source: "/blood-help", destination: "/blood-donations", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

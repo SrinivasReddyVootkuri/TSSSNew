@@ -87,8 +87,8 @@ export function Hero({ name, tagline, nextEvent }: Props) {
               <ButtonLink href="/register" size="lg" variant="brand">
                 Register Now
               </ButtonLink>
-              <ButtonLink href="/blood-help" size="lg" variant="onDark">
-                Blood Help
+              <ButtonLink href="/blood-donations" size="lg" variant="onDark">
+                Blood Donations
               </ButtonLink>
               <ButtonLink href="/events" size="lg" variant="onDark">
                 Upcoming Events

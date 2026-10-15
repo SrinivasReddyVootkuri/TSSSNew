@@ -188,7 +188,7 @@ export const CONTACT_PREFERENCE_OPTIONS = [
   { value: "email", label: "Email" },
 ] as const;
 
-/** Lifecycle of a donation request, distinct from emergency blood help. */
+/** Lifecycle of a donation request, distinct from emergency blood donations. */
 export const DONATION_REQUEST_STATUSES = [
   { value: "pending", label: "Pending" },
   { value: "in_progress", label: "In Progress" },

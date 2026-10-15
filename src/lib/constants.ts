@@ -22,7 +22,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { href: "/donations", label: "Donations" },
   { href: "/media", label: "Media" },
   { href: "/blogs", label: "Blogs" },
-  { href: "/blood-help", label: "Blood Help" },
+  { href: "/blood-donations", label: "Blood Donations" },
 ];
 
 /** Secondary, high-engagement links shown next to the primary navigation. */
@@ -46,7 +46,7 @@ export const BLOG_CATEGORIES = [
   "Devotional",
   "Community Service",
   "Education",
-  "Blood Help",
+  "Blood Donations",
   "Announcements",
 ] as const;
 

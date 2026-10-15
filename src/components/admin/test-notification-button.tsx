@@ -37,7 +37,7 @@ export function TestNotificationButton({
     <div className="mt-4 rounded-2xl border border-brand-100 bg-slate-50/70 p-4">
       <p className="text-sm font-semibold text-ink-900">Test {channel} delivery</p>
       <p className="mt-1 text-xs leading-relaxed text-slate-600">
-        Sends a sample blood help notification so you can confirm the provider credentials work.
+        Sends a sample blood donation notification so you can confirm the provider credentials work.
       </p>
       <button
         type="button"

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-/** Active districts and areas for the public blood help form. */
+/** Active districts and areas for the public blood donations form. */
 export async function GET() {
   const supabase = await createClient();
 
