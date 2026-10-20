@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { PhotoBoothStudio } from "@/components/photobooth/photo-booth-studio";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
+import { Input, Label } from "@/components/ui/input";
 import { getPhotoBoothTemplateBySlug, getPhotoBoothTemplates } from "@/lib/data/photo-booth";
 import { SITE_URL } from "@/lib/constants";
 
@@ -24,7 +25,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function PhotoBoothPage() {
+export default async function PhotoBoothPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ card?: string }>;
+}) {
+  const { card } = await searchParams;
   const templates = await getPhotoBoothTemplates();
 
   if (templates.length === 0) {
@@ -134,6 +140,89 @@ export default async function PhotoBoothPage() {
           </div>
 
           <PhotoBoothStudio templates={withCounts} />
+        </div>
+      </section>
+
+      <section id="id-card" className="py-14 sm:py-16">
+        <div className="container-page">
+          <div className="surface-card grid items-center gap-8 p-6 sm:p-10 lg:grid-cols-2">
+            <div>
+              <p className="text-xs font-semibold tracking-[0.22em] text-gold-600 uppercase">
+                For members
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold text-ink-900 sm:text-3xl">
+                Download your ID card
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                Give the registration number from your confirmation together with your full name, exactly as
+                registered. Both must match an approved membership — the card downloads as an image.
+              </p>
+              <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                Not approved yet? Registrations wait for an administrator to approve them. Registered but
+                waiting? Check back here in a couple of days, or contact the trust.
+              </p>
+            </div>
+
+            <form action="/api/id-card-lookup" method="get" className="space-y-4" aria-label="Download your ID card">
+              {card ? (
+                <p
+                  role="status"
+                  className={`rounded-2xl border p-4 text-sm leading-relaxed ${
+                    card === "slow-down"
+                      ? "border-amber-200 bg-amber-50 text-amber-900"
+                      : "border-red-200 bg-red-50 text-red-800"
+                  }`}
+                >
+                  {card === "missing"
+                    ? "Please give both the registration number and your full name."
+                    : card === "slow-down"
+                      ? "Too many attempts just now. Please wait a little while and try again."
+                      : card === "error"
+                        ? "We could not prepare your card right now. Please try again in a moment."
+                        : "We could not find an approved registration with those details. Check the number and the name — both must match your confirmation exactly."}
+                </p>
+              ) : null}
+
+              <div>
+                <Label htmlFor="cardNumber" required>
+                  Registration Number
+                </Label>
+                <Input
+                  id="cardNumber"
+                  name="number"
+                  autoComplete="off"
+                  placeholder="TSSS000123"
+                  pattern="TSSS[0-9]{6}"
+                  title="Your registration number, e.g. TSSS000123"
+                  className="font-mono uppercase"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="cardName" required>
+                  Full Name
+                </Label>
+                <Input
+                  id="cardName"
+                  name="name"
+                  autoComplete="name"
+                  placeholder="As written on your registration"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-600 to-brand-500 px-8 text-sm font-semibold text-white transition-transform hover:scale-[1.02]"
+              >
+                <svg viewBox="0 0 20 20" className="size-4" fill="currentColor" aria-hidden="true">
+                  <path d="M10 2a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3Zm-6 8h1.2a4.8 4.8 0 0 0 9.6 0H16a6 6 0 0 1-5 5.9V18H9v-2.1A6 6 0 0 1 4 10Z" />
+                </svg>
+                Download ID card
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 
