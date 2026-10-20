@@ -173,6 +173,8 @@ export interface DistrictRow {
   id: string;
   name: string;
   slug: string;
+  /** State this district belongs to (e.g. TS). Added by migration 0014. */
+  state_code: string | null;
   is_active: boolean;
   display_order: number;
   created_at: string;

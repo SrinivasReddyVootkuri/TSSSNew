@@ -63,9 +63,9 @@ export const registrationSchema = z.object({
       .min(1, "Please select your state.")
       .refine((value) => STATE_CODES.has(value.toUpperCase()), "Please select a valid state."),
   ),
-  districtId: trimmed(
-    z.string().min(1, "Please select your district."),
-  ),
+  // Optional: only Telangana and Andhra Pradesh have district lists, so a
+  // member from another state legitimately has none.
+  districtId: trimmed(z.string().optional().default("")),
   dateOfBirth: z
     .string()
     .optional()

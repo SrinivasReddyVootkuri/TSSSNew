@@ -38,11 +38,11 @@ function readForm(html) {
     const value = /value="([^"]*)"/.exec(tag[0])?.[1] ?? "";
     if (name && !/^\$ACTION_ID_/.test(name)) hidden.push([name, decode(value)]);
   }
-  return { form, hidden };
+  return { hidden };
 }
 
 const html = await (await fetch(`${BASE}/register`)).text();
-const { form, hidden } = readForm(html);
+const { hidden } = readForm(html);
 
 const body = new FormData();
 for (const [name, value] of hidden) body.append(name, value);

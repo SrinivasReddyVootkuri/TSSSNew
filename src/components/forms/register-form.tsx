@@ -44,7 +44,14 @@ export function RegisterForm({
   const values = (state.values ?? {}) as Record<string, string>;
 
   const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY_CODE);
+  // The state drives which districts are offered; the two states the trust
+  // works in have complete official lists.
+  const [stateCode, setStateCode] = useState("TS");
   const dialCode = dialCodeFor(countryCode);
+
+  const stateDistricts = districts.filter(
+    (district) => !district.state_code || district.state_code === stateCode,
+  );
 
   if (state.status === "success" && state.data) {
     return (
@@ -183,25 +190,16 @@ export function RegisterForm({
 
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
-            <Label htmlFor="districtId" required>
-              District
-            </Label>
-            <Select id="districtId" name="districtId" defaultValue={values.districtId ?? ""} required>
-              <option value="">Select district</option>
-              {districts.map((district) => (
-                <option key={district.id} value={district.id}>
-                  {district.name}
-                </option>
-              ))}
-            </Select>
-            <FieldError message={errors.districtId} />
-          </div>
-
-          <div>
             <Label htmlFor="stateCode" required>
               State
             </Label>
-            <Select id="stateCode" name="stateCode" defaultValue={values.stateCode ?? "TS"} required>
+            <Select
+              id="stateCode"
+              name="stateCode"
+              value={stateCode}
+              onChange={(event) => setStateCode(event.target.value)}
+              required
+            >
               {INDIAN_STATES.map((state) => (
                 <option key={state.code} value={state.code}>
                   {state.name}
@@ -209,6 +207,33 @@ export function RegisterForm({
               ))}
             </Select>
             <FieldError message={errors.stateCode} />
+          </div>
+
+          <div>
+            <Label htmlFor="districtId" required={stateDistricts.length > 0} hint={stateDistricts.length === 0 ? "Optional" : undefined}>
+              District
+            </Label>
+            <Select
+              id="districtId"
+              name="districtId"
+              key={stateCode}
+              defaultValue={values.districtId ?? ""}
+              required={stateDistricts.length > 0}
+            >
+              {stateDistricts.length === 0 ? (
+                <option value="">Not listed — district is optional</option>
+              ) : (
+                <>
+                  <option value="">Select district</option>
+                  {stateDistricts.map((district) => (
+                    <option key={district.id} value={district.id}>
+                      {district.name}
+                    </option>
+                  ))}
+                </>
+              )}
+            </Select>
+            <FieldError message={errors.districtId} />
           </div>
 
           <div>
