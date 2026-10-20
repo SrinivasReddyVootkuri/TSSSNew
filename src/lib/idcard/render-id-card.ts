@@ -13,6 +13,10 @@
 
 import "server-only";
 
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+
 import sharp from "sharp";
 
 import {
@@ -22,6 +26,45 @@ import {
   stateName,
 } from "@/lib/lookups";
 import type { Gender } from "@/lib/lookups";
+
+/**
+ * Server runtimes such as Vercel's ship without any fonts, and librsvg draws
+ * every glyph as an empty box when fontconfig has nothing to match. Bundling
+ * the card's typeface with the app and pointing fontconfig at it keeps the
+ * rendered text identical everywhere.
+ *
+ * This must run before the first SVG render in the process, because librsvg
+ * initialises fontconfig once and caches the result.
+ */
+function registerBundledFont(): void {
+  if (process.env.FONTCONFIG_FILE) return;
+
+  const fontPath = path.join(process.cwd(), "public", "brand", "fonts", "Geist-Regular.ttf");
+  if (!existsSync(fontPath)) return;
+
+  const configDir = path.join(tmpdir(), "tsss-fontconfig");
+  try {
+    mkdirSync(configDir, { recursive: true });
+    writeFileSync(
+      path.join(configDir, "fonts.conf"),
+      [
+        "<?xml version=\"1.0\"?>",
+        "<!DOCTYPE fontconfig SYSTEM \"urn:fontconfig:fonts.dtd\">",
+        "<fontconfig>",
+        `  <dir>${path.dirname(fontPath)}</dir>`,
+        `  <cachedir>${path.join(configDir, "cache")}</cachedir>`,
+        "</fontconfig>",
+      ].join("\n"),
+    );
+    process.env.FONTCONFIG_FILE = path.join(configDir, "fonts.conf");
+  } catch (error) {
+    // Without a writable temp dir the card still renders, just with whatever
+    // fonts the runtime happens to have.
+    console.error("fontconfig setup failed:", error);
+  }
+}
+
+registerBundledFont();
 
 export const ID_CARD_WIDTH = 1000;
 export const ID_CARD_HEIGHT = 1600;
