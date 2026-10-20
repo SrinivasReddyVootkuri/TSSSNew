@@ -30,7 +30,6 @@ import {
   verifyTurnstile,
 } from "@/lib/security/rate-limit";
 import { dispatchBloodHelpNotifications } from "@/lib/notifications/dispatch";
-import { issueIdCardToken } from "@/lib/idcard/signed-link";
 import { uploadObjectKey, verifyImageFile } from "@/lib/security/uploads";
 import { slugify, textToSafeHtml } from "@/lib/utils/sanitize";
 import type { FormState } from "@/lib/actions/state";
@@ -200,18 +199,6 @@ async function registerMemberInner(
 
   const registrationNumber = String(row?.registration_number ?? "");
 
-  // A signed link so the new member can download their own ID card. It carries
-  // no authority beyond this one card, for one hour.
-  let idCardToken = "";
-  if (registrationNumber) {
-    try {
-      idCardToken = issueIdCardToken(registrationNumber, input.mobileNumber).token;
-    } catch (error) {
-      // A missing signing key must not cost the member their registration.
-      console.error("id card link could not be signed:", error);
-    }
-  }
-
   return {
     status: "success",
     message: "Registration successful.",
@@ -222,7 +209,6 @@ async function registerMemberInner(
       village: row?.village ?? input.village,
       registeredAt: row?.registered_at ?? new Date().toISOString(),
       mobileNumber: input.mobileNumber,
-      idCardToken,
     },
   };
 }

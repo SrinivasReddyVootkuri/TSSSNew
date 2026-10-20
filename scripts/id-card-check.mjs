@@ -118,20 +118,12 @@ const anonymous = await fetch(`${BASE}/api/admin/members/${member.id}/id-card`, 
 });
 check("anonymous admin download is refused", anonymous.status === 403, String(anonymous.status));
 
-const anonymousPublic = await fetch(
-  `${BASE}/api/id-card?number=${member.registration_number}&token=nonsense`,
-  { redirect: "manual" },
-);
-check(
-  "a forged token is refused",
-  anonymousPublic.status === 403,
-  String(anonymousPublic.status),
-);
-
-const missingToken = await fetch(`${BASE}/api/id-card?number=${member.registration_number}`, {
+// The self-service card link was removed: cards are delivered by email after
+// approval, so the old public token endpoint must be gone.
+const removedPublic = await fetch(`${BASE}/api/id-card?number=${member.registration_number}`, {
   redirect: "manual",
 });
-check("a missing token is refused", missingToken.status === 400, String(missingToken.status));
+check("the removed self-service card route is gone", removedPublic.status === 404, String(removedPublic.status));
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed === 0 ? 0 : 1);

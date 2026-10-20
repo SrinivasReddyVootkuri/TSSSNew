@@ -268,9 +268,9 @@ Limits: **3 submissions per day** from the same device. Blank lines separate par
    like **TSSS000123**. Your registration is now **pending approval** — it does not count
    as active until an administrator approves it.
 3. A summary table shows your name, date of birth, village and registration date.
-4. Press **Download your ID card** for an immediate copy. Once approved, the official card
-   arrives by email as well. Use **Print** or **Download / Save as PDF** to keep a copy.
-   **Back to home** finishes.
+4. Use **Print** or **Download / Save as PDF** to keep a copy of the confirmation.
+   **Back to home** finishes. Your ID card arrives by email once an administrator
+   approves your registration.
 
 ### If something goes wrong
 
@@ -295,14 +295,14 @@ across the top, your photograph, your name, father's name, designation, mobile n
 address, blood group, date of birth, gender and age, with the organisation's phone and email
 at the bottom.
 
-- Press **Download your ID card** on the success screen for an immediate copy (one-hour link).
-- Once an administrator approves your registration, the official card arrives **by email**
+- Once an administrator approves your registration, the card arrives **by email**
   with your auto-generated registration number. Give it a few days; if nothing arrives,
   contact the trust — your email address may have a typo, which an administrator can correct.
 - If you registered without a photo, the card prints "No photo" in its place.
 - Members registered before the photo field existed print em dashes for the fields they never
   supplied. Their cards remain valid.
-- Lost the link? The trust can print a fresh copy from your registration number at any time.
+- Lost or never received it? The trust can email or print a fresh copy from your registration
+  number at any time.
 
 ---
 
@@ -1326,7 +1326,7 @@ bulk ID card download.** Everything else is handled one record at a time.
 | "My registration number is lost" | Numbers cannot be looked up or reissued from the website. Find them in the member list by name and date of birth |
 | "I submitted a blog and cannot see it" | It is waiting for review. Check the Pending queue |
 | "My blood request shows nothing" | There is no public tracking page. Quote the reference number when you call |
-| "My ID card link expired" | Links last one hour. The trust can reissue a card from the registration number at any time |
+| "My ID card never arrived" | Cards are emailed after approval. Ask the trust to approve your registration and re-send; they can also print a copy from your registration number |
 | "I registered but heard nothing" | Registrations wait for approval. Ask the trust to check the pending queue; the ID card arrives by email after approval |
 | "The contact form says sent but nobody replied" | Check the trust inbox, and confirm the FormSubmit activation email was accepted the first time |
 | "The photo booth will not download" | Mobile browsers sometimes open the share sheet instead. Dismiss it and the file saves. Try a desktop browser |
