@@ -20,6 +20,7 @@
     "db:apply:rename-blood": "node scripts/db-apply.mjs supabase/migrations/0010_blood_help_to_donations.sql",
     "db:apply:pending-status": "node scripts/db-apply.mjs supabase/migrations/0011_member_pending_status.sql",
     "db:apply:pending-default": "node scripts/db-apply.mjs supabase/migrations/0012_member_pending_default.sql",
+    "db:apply:member-age": "node scripts/db-apply.mjs supabase/migrations/0013_member_age_and_district.sql",
     "db:seed": "node scripts/db-apply.mjs supabase/seed.sql",
     "db:remove-demo": "node scripts/db-apply.mjs supabase/remove-demo-content.sql",
     "db:reset-sequences": "node scripts/db-apply.mjs supabase/reset-sequences.sql",

@@ -11,7 +11,6 @@ import {
   BLOOD_GROUPS,
   BLOOD_GROUP_OPTIONS,
   COUNTRIES,
-  GENDER_OPTIONS,
   INDIAN_STATES,
 } from "@/lib/lookups";
 
@@ -20,7 +19,6 @@ const trimmed = (schema: z.ZodType<string>) => z.preprocess((v) => (typeof v ===
 const COUNTRY_CODES = new Set(COUNTRIES.map((country) => country.code));
 const STATE_CODES = new Set(INDIAN_STATES.map((state) => state.code));
 const BLOOD_GROUP_VALUES = new Set(BLOOD_GROUP_OPTIONS.map((option) => option.value));
-const GENDER_VALUES = new Set<string>(GENDER_OPTIONS.map((option) => option.value));
 
 export const registrationSchema = z.object({
   fullName: trimmed(
@@ -45,12 +43,8 @@ export const registrationSchema = z.object({
         "Name must contain letters only.",
       ),
   ),
-  gender: trimmed(
-    z
-      .string()
-      .min(1, "Please select a gender.")
-      .refine((value) => GENDER_VALUES.has(value), "Please select a valid option."),
-  ),
+  // Gender is not collected: every member is recorded as male by default, which
+  // keeps the ID card's Details line consistent.
   bloodGroup: trimmed(
     z
       .string()
@@ -103,12 +97,6 @@ export const registrationSchema = z.object({
     .refine((value) => value === "" || z.email().safeParse(value).success, "Enter a valid email address.")
     .optional()
     .default(""),
-  phoneCountryCode: trimmed(
-    z
-      .string()
-      .min(1, "Please select your country code.")
-      .refine((value) => COUNTRY_CODES.has(value.toUpperCase()), "Please select a valid country code."),
-  ),
   age: trimmed(
     z
       .string()

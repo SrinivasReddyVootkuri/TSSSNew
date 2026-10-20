@@ -77,6 +77,13 @@ export async function loadMemberPhoto(url: string | null): Promise<string | null
   }
 }
 
+/** Reads a district name out of the embedded `districts(name)` join. */
+function districtNameFrom(districts: { name: string } | { name: string }[] | null | undefined) {
+  if (!districts) return null;
+  if (Array.isArray(districts)) return districts[0]?.name ?? null;
+  return districts.name ?? null;
+}
+
 /** Maps a member row onto the shape the renderer expects. */
 export function toIdCardMember(row: {
   registration_number: string;
@@ -84,11 +91,16 @@ export function toIdCardMember(row: {
   father_name: string | null;
   designation: string | null;
   date_of_birth: string | null;
+  age: number | null;
   gender: string | null;
   blood_group: string | null;
   mobile_number: string;
   phone_country_code: string | null;
   village: string | null;
+  district_id?: string | null;
+  district_name?: string | null;
+  /** Embedded join result, when the caller selected `districts(name)`. */
+  districts?: { name: string } | { name: string }[] | null;
   state_code: string | null;
   country_code: string | null;
   profile_photo_url: string | null;
@@ -99,12 +111,14 @@ export function toIdCardMember(row: {
     fatherName: row.father_name,
     designation: row.designation,
     dateOfBirth: row.date_of_birth,
+    age: row.age ?? null,
     gender: (row.gender ?? null) as IdCardMember["gender"],
     bloodGroup: row.blood_group,
     mobileNumber: row.mobile_number,
     phoneCountryCode: row.phone_country_code,
     village: row.village,
-    stateCode: row.state_code,
+    districtId: row.district_id ?? null,
+    districtName: row.district_name ?? districtNameFrom(row.districts),    stateCode: row.state_code,
     countryCode: row.country_code,
     profilePhotoUrl: row.profile_photo_url,
   };

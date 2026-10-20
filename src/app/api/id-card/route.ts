@@ -29,7 +29,7 @@ export async function GET(request: Request) {
   const { data: member, error } = await supabase
     .from("members")
     .select(
-      "registration_number, full_name, father_name, designation, date_of_birth, gender, blood_group, mobile_number, phone_country_code, village, state_code, country_code, profile_photo_url",
+      "registration_number, full_name, father_name, designation, date_of_birth, age, gender, blood_group, mobile_number, phone_country_code, village, districts(name), state_code, country_code, profile_photo_url",
     )
     .eq("registration_number", number)
     .maybeSingle();

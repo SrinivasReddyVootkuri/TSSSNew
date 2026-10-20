@@ -40,11 +40,14 @@ export type IdCardMember = {
   fatherName: string | null;
   designation: string | null;
   dateOfBirth: string | null;
+  age?: number | null;
   gender: Gender | null;
   bloodGroup: string | null;
   mobileNumber: string;
   phoneCountryCode: string | null;
   village: string | null;
+  districtId?: string | null;
+  districtName?: string | null;
   stateCode: string | null;
   countryCode: string | null;
   profilePhotoUrl: string | null;
@@ -83,20 +86,9 @@ function formatDateDdMmYyyy(value: string | null): string {
   return `${match[3]}/${match[2]}/${match[1]}`;
 }
 
-function ageFrom(dateOfBirth: string | null): string {
-  if (!dateOfBirth) return "—";
-  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateOfBirth);
-  if (!match) return "—";
-
-  const born = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
-  if (Number.isNaN(born.getTime())) return "—";
-
-  const now = new Date();
-  let age = now.getFullYear() - born.getFullYear();
-  const monthDelta = now.getMonth() - born.getMonth();
-  if (monthDelta < 0 || (monthDelta === 0 && now.getDate() < born.getDate())) age -= 1;
-
-  return age >= 0 && age < 130 ? `${age}` : "—";
+function ageLabel(age: number | null | undefined): string {
+  if (age === null || age === undefined || age < 0 || age > 130) return "—";
+  return `${age}`;
 }
 
 function genderLabel(gender: Gender | null): string {
@@ -196,11 +188,13 @@ export function buildIdCardSvg(member: IdCardMember, assets: IdCardAssets): stri
     fatherName,
     designation,
     dateOfBirth,
+    age,
     gender,
     bloodGroup,
     mobileNumber,
     phoneCountryCode,
     village,
+    districtName,
     stateCode,
     countryCode,
   } = member;
@@ -216,6 +210,7 @@ export function buildIdCardSvg(member: IdCardMember, assets: IdCardAssets): stri
   const addressLines = [
     village ? `Vill. & Mdl: ${clip(village, 30)}` : "Vill. & Mdl: —",
     [
+      districtName ? `Dist.: ${clip(districtName, 22)}` : null,
       stateCode ? stateName(stateCode) : null,
       countryCode ? countryName(countryCode) : null,
     ]
@@ -301,7 +296,7 @@ export function buildIdCardSvg(member: IdCardMember, assets: IdCardAssets): stri
     <text x="${COLON_X}" y="1258" font-family="Arial, Helvetica, sans-serif" font-size="26"
           font-weight="700" fill="#5a6b80">:</text>
     <text x="${VALUE_X}" y="1258" font-family="Arial, Helvetica, sans-serif" font-size="26"
-          font-weight="700" fill="#5a6b80">DOB ${escapeXml(formatDateDdMmYyyy(dateOfBirth))}   ·   ${escapeXml(genderLabel(gender))}   ·   Age ${escapeXml(ageFrom(dateOfBirth))}</text>
+          font-weight="700" fill="#5a6b80">DOB ${escapeXml(formatDateDdMmYyyy(dateOfBirth))}   ·   ${escapeXml(genderLabel(gender))}   ·   Age ${escapeXml(ageLabel(age))}</text>
 
     <!-- Footer -->
     <path d="M 0 1330 C 260 1272, 640 1270, 1000 1330 L 1000 1600 L 0 1600 Z"

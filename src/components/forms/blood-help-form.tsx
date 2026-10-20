@@ -22,6 +22,7 @@ export function BloodHelpForm({
 }) {
   const [state, formAction] = useActionState(submitBloodHelpRequest, INITIAL);
   const errors = (state.errors ?? {}) as Record<string, string>;
+  const values = (state.values ?? {}) as Record<string, string>;
   const [selection, setSelection] = useState({ districtId: "", areaId: "" });
   const { districtId, areaId } = selection;
 
@@ -102,6 +103,7 @@ export function BloodHelpForm({
               Requester Name
             </Label>
             <Input
+              defaultValue={values.requesterName ?? ""}
               id="requesterName"
               name="requesterName"
               autoComplete="name"
@@ -117,6 +119,7 @@ export function BloodHelpForm({
               Mobile Number
             </Label>
             <Input
+              defaultValue={values.mobileNumber ?? ""}
               id="mobileNumber"
               name="mobileNumber"
               type="tel"
@@ -133,7 +136,7 @@ export function BloodHelpForm({
             <Label htmlFor="bloodGroup" required>
               Blood Group
             </Label>
-            <Select id="bloodGroup" name="bloodGroup" required aria-invalid={Boolean(errors.bloodGroup)}>
+            <Select id="bloodGroup" name="bloodGroup" defaultValue={values.bloodGroup ?? ""} required aria-invalid={Boolean(errors.bloodGroup)}>
               <option value="">Select blood group</option>
               {BLOOD_GROUPS.map((group) => (
                 <option key={group} value={group}>
@@ -154,7 +157,7 @@ export function BloodHelpForm({
               type="number"
               min={1}
               max={50}
-              defaultValue={1}
+              defaultValue={values.unitsRequired || 1}
               required
               aria-invalid={Boolean(errors.unitsRequired)}
             />
@@ -167,6 +170,7 @@ export function BloodHelpForm({
             Hospital Name
           </Label>
           <Input
+            defaultValue={values.hospitalName ?? ""}
             id="hospitalName"
             name="hospitalName"
             required
@@ -181,6 +185,7 @@ export function BloodHelpForm({
             Hospital Location
           </Label>
           <Input
+            defaultValue={values.hospitalLocation ?? ""}
             id="hospitalLocation"
             name="hospitalLocation"
             placeholder="e.g. Gandhi Nagar, near bus stop"
@@ -246,6 +251,7 @@ export function BloodHelpForm({
             Required Date
           </Label>
           <Input
+            defaultValue={values.requiredDate ?? ""}
             id="requiredDate"
             name="requiredDate"
             type="date"
@@ -260,6 +266,7 @@ export function BloodHelpForm({
             Message / Additional Information
           </Label>
           <Textarea
+            defaultValue={values.message ?? ""}
             id="message"
             name="message"
             rows={4}

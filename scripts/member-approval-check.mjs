@@ -117,14 +117,18 @@ for (const match of registerForm.matchAll(/<input[^>]*type="hidden"[^>]*>/g)) {
   const value = /value="([^"]*)"/.exec(match[0])?.[1] ?? "";
   if (name && !/^\$ACTION_ID_/.test(name)) registerBody.append(name, decode(value));
 }
+
+// A district is chosen from the list the server renders.
+const districtOption = /<option value="([0-9a-f-]{36})">[^<]+<\/option>/.exec(registerForm);
 for (const [name, value] of Object.entries({
   fullName: memberName,
   fatherName: "Approval Father",
   dateOfBirth: "1990-06-06",
-  gender: "male",
+  age: "35",
   bloodGroup: "A+",
   countryCode: "IN",
   stateCode: "TS",
+  districtId: districtOption?.[1] ?? "",
   village: "Approval Village",
   mobileNumber: `98654${String(stamp).padStart(5, "0")}`,
   email: "approval-probe@example.com",

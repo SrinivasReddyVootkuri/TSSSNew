@@ -27,6 +27,7 @@ const INITIAL: FormState = INITIAL_FORM_STATE;
 export function DonorRegistrationForm() {
   const [state, formAction] = useActionState(registerDonor, INITIAL);
   const errors = (state.errors ?? {}) as Record<string, string>;
+  const values = (state.values ?? {}) as Record<string, string>;
 
   const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY_CODE);
   const dialCode = dialCodeFor(countryCode);
@@ -59,7 +60,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorName" required>
               Full Name
             </Label>
-            <Input id="donorName" name="fullName" autoComplete="name" required maxLength={120} />
+            <Input id="donorName" defaultValue={values.fullName ?? ""} name="fullName" autoComplete="name" required maxLength={120} />
             <FieldError message={errors.fullName} />
           </div>
 
@@ -67,7 +68,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorFather" hint="Optional">
               Father&apos;s Name
             </Label>
-            <Input id="donorFather" name="fatherName" maxLength={120} />
+            <Input id="donorFather" defaultValue={values.fatherName ?? ""} name="fatherName" maxLength={120} />
             <FieldError message={errors.fatherName} />
           </div>
 
@@ -76,6 +77,7 @@ export function DonorRegistrationForm() {
               Date of Birth
             </Label>
             <Input
+              defaultValue={values.dateOfBirth ?? ""}
               id="donorDob"
               name="dateOfBirth"
               type="date"
@@ -89,7 +91,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorGender" hint="Optional">
               Gender
             </Label>
-            <Select id="donorGender" name="gender" defaultValue="">
+            <Select id="donorGender" name="gender" defaultValue={values.gender ?? ""}>
               <option value="">Prefer not to say</option>
               {GENDER_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -104,7 +106,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorBlood" required>
               Blood Group
             </Label>
-            <Select id="donorBlood" name="bloodGroup" defaultValue="" required>
+            <Select id="donorBlood" name="bloodGroup" defaultValue={values.bloodGroup ?? ""} required>
               <option value="" disabled>
                 Select blood group
               </option>
@@ -122,6 +124,7 @@ export function DonorRegistrationForm() {
               Last Donation Date
             </Label>
             <Input
+              defaultValue={values.lastDonationDate ?? ""}
               id="donorLastDonation"
               name="lastDonationDate"
               type="date"
@@ -162,7 +165,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorState" hint="Optional">
               State
             </Label>
-            <Select id="donorState" name="stateCode" defaultValue="TS">
+            <Select id="donorState" name="stateCode" defaultValue={values.stateCode ?? "TS"}>
               {INDIAN_STATES.map((state) => (
                 <option key={state.code} value={state.code}>
                   {state.name}
@@ -176,7 +179,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorCity" hint="Optional">
               City / District
             </Label>
-            <Input id="donorCity" name="city" autoComplete="address-level2" maxLength={120} />
+            <Input id="donorCity" defaultValue={values.city ?? ""} name="city" autoComplete="address-level2" maxLength={120} />
             <FieldError message={errors.city} />
           </div>
 
@@ -184,7 +187,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorArea" hint="Optional">
               Area / Locality
             </Label>
-            <Input id="donorArea" name="area" maxLength={120} placeholder="e.g. Sriramapuram" />
+            <Input id="donorArea" defaultValue={values.area ?? ""} name="area" maxLength={120} placeholder="e.g. Sriramapuram" />
             <FieldError message={errors.area} />
           </div>
 
@@ -192,7 +195,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorAddress" hint="Optional">
               Address
             </Label>
-            <Input id="donorAddress" name="address" autoComplete="street-address" maxLength={400} />
+            <Input id="donorAddress" defaultValue={values.address ?? ""} name="address" autoComplete="street-address" maxLength={400} />
             <FieldError message={errors.address} />
           </div>
 
@@ -208,6 +211,7 @@ export function DonorRegistrationForm() {
                 +{dialCode}
               </span>
               <Input
+                defaultValue={values.mobileNumber ?? ""}
                 id="donorMobile"
                 name="mobileNumber"
                 type="tel"
@@ -225,7 +229,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorEmail" hint="Optional">
               Email Address
             </Label>
-            <Input id="donorEmail" name="email" type="email" autoComplete="email" maxLength={160} />
+            <Input id="donorEmail" defaultValue={values.email ?? ""} name="email" type="email" autoComplete="email" maxLength={160} />
             <FieldError message={errors.email} />
           </div>
 
@@ -233,7 +237,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorContact" hint="How should we call you?">
               Preferred Contact
             </Label>
-            <Select id="donorContact" name="preferredContact" defaultValue="phone">
+            <Select id="donorContact" name="preferredContact" defaultValue={values.preferredContact ?? ""}>
               {CONTACT_PREFERENCE_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
@@ -247,7 +251,7 @@ export function DonorRegistrationForm() {
             <Label htmlFor="donorAvailability" hint="Optional · e.g. weekends, evenings">
               Availability
             </Label>
-            <Input id="donorAvailability" name="availability" maxLength={200} />
+            <Input id="donorAvailability" defaultValue={values.availability ?? ""} name="availability" maxLength={200} />
             <FieldError message={errors.availability} />
           </div>
         </div>

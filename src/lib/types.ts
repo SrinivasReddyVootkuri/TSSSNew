@@ -146,6 +146,7 @@ export interface MemberRow {
   full_name: string;
   normalized_full_name: string;
   date_of_birth: string;
+  age: number | null;
   village: string | null;
   mobile_number: string;
   normalized_mobile: string;
@@ -161,6 +162,9 @@ export interface MemberRow {
   phone_country_code: string | null;
   profile_photo_url: string | null;
   designation: string | null;
+  /** Added by migration 0013. */
+  district_id: string | null;
+  district_name: string | null;
   created_at: string;
   updated_at: string;
 }

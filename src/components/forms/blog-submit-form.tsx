@@ -13,6 +13,7 @@ const INITIAL: FormState = INITIAL_FORM_STATE;
 export function BlogSubmitForm({ categories }: { categories: string[] }) {
   const [state, formAction] = useActionState(submitBlogPost, INITIAL);
   const errors = (state.errors ?? {}) as Record<string, string>;
+  const values = (state.values ?? {}) as Record<string, string>;
 
   const options = categories.length > 0 ? categories : [...BLOG_CATEGORIES];
 
@@ -38,28 +39,28 @@ export function BlogSubmitForm({ categories }: { categories: string[] }) {
           <Label htmlFor="authorName" required>
             Full Name
           </Label>
-          <Input id="authorName" name="authorName" autoComplete="name" required />
+          <Input id="authorName" defaultValue={values.authorName ?? ""} name="authorName" autoComplete="name" required />
           <FieldError message={errors.authorName} />
         </div>
         <div>
           <Label htmlFor="authorEmail" required>
             Email
           </Label>
-          <Input id="authorEmail" name="authorEmail" type="email" autoComplete="email" required />
+          <Input id="authorEmail" defaultValue={values.authorEmail ?? ""} name="authorEmail" type="email" autoComplete="email" required />
           <FieldError message={errors.authorEmail} />
         </div>
         <div>
           <Label htmlFor="authorMobile" hint="Optional">
             Mobile Number
           </Label>
-          <Input id="authorMobile" name="authorMobile" type="tel" inputMode="numeric" autoComplete="tel-national" />
+          <Input id="authorMobile" defaultValue={values.authorMobile ?? ""} name="authorMobile" type="tel" inputMode="numeric" autoComplete="tel-national" />
           <FieldError message={errors.authorMobile} />
         </div>
         <div>
           <Label htmlFor="category" required>
             Category
           </Label>
-          <Select id="category" name="category" defaultValue="General" required>
+          <Select id="category" name="category" defaultValue={values.category ?? ""} required>
             {options.map((category) => (
               <option key={category} value={category}>
                 {category}
@@ -74,7 +75,7 @@ export function BlogSubmitForm({ categories }: { categories: string[] }) {
         <Label htmlFor="title" required>
           Blog Title
         </Label>
-        <Input id="title" name="title" required maxLength={200} placeholder="A short, descriptive title" />
+        <Input id="title" defaultValue={values.title ?? ""} name="title" required maxLength={200} placeholder="A short, descriptive title" />
         <FieldError message={errors.title} />
       </div>
 
@@ -83,6 +84,7 @@ export function BlogSubmitForm({ categories }: { categories: string[] }) {
           Blog Content
         </Label>
         <Textarea
+          defaultValue={values.content ?? ""}
           id="content"
           name="content"
           rows={8}

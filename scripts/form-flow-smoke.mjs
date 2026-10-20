@@ -117,28 +117,34 @@ async function run() {
   const registerForm = readForm(registerHtml);
   check(
     "registration form exposes the required fields",
-    ["fullName", "fatherName", "dateOfBirth", "gender", "bloodGroup", "countryCode", "stateCode", "village", "mobileNumber"].every(
+    ["fullName", "fatherName", "age", "bloodGroup", "countryCode", "stateCode", "districtId", "village", "mobileNumber"].every(
       (name) => registerForm.fields.includes(name),
     ),
     registerForm.fields.join(","),
   );
+  check("registration form no longer collects gender", !registerForm.fields.includes("gender"));
 
   const name = `FormFlowPerson${stamp}`;
   const bloodRequester = `Form Flow Patient${stamp}`;
 
-  // The new mandatory profile fields, mirroring what a visitor must supply.
+  // Gender is no longer collected; every member is recorded as male. Age is
+  // required because the ID card and dashboard use it.
   const profile = {
     fatherName: "FormFlowFather",
-    gender: "male",
     bloodGroup: "O+",
     countryCode: "IN",
     stateCode: "TS",
+    age: "34",
   };
+
+  // A district is chosen from the list the server renders.
+  const districtOption = /<option value="([0-9a-f-]{36})">[^<]+<\/option>/.exec(registerHtml);
+  const districtId = districtOption?.[1] ?? "";
 
   const registration = await submit("/register", registerForm.form, registerForm.hidden, {
     fullName: name,
-    dateOfBirth: "1988-04-12",
     ...profile,
+    districtId,
     village: "Sriramapuram",
     mobileNumber: `98765${String(stamp % 100000).padStart(5, "0")}`,
     email: "",
@@ -154,23 +160,25 @@ async function run() {
 
   const { data: created } = await admin
     .from("members")
-    .select("registration_number, father_name, gender, blood_group, state_code, country_code, phone_country_code")
+    .select("registration_number, father_name, gender, blood_group, state_code, country_code, phone_country_code, age, district_id")
     .eq("full_name", name)
     .maybeSingle();
   check("member row created in the database", Boolean(created), JSON.stringify(created ?? {}));
   check("registration number assigned", /^TSSS\d{6}$/.test(created?.registration_number ?? ""), created?.registration_number ?? "");
   check("father's name stored", created?.father_name === profile.fatherName, created?.father_name ?? "");
-  check("gender stored", created?.gender === profile.gender, created?.gender ?? "");
+  check("gender defaults to male", created?.gender === "male", created?.gender ?? "");
   check("blood group stored", created?.blood_group === profile.bloodGroup, created?.blood_group ?? "");
   check("state stored", created?.state_code === profile.stateCode, created?.state_code ?? "");
   check("country defaults to India", created?.country_code === "IN", created?.country_code ?? "");
   check("dialling code resolved from the country", created?.phone_country_code === "91", created?.phone_country_code ?? "");
+  check("age stored", created?.age === Number(profile.age), created?.age ?? "");
+  check("district stored", created?.district_id === districtId, created?.district_id ?? "");
 
   console.log("\n2. Duplicate submission");
   const duplicate = await submit("/register", registerForm.form, registerForm.hidden, {
     fullName: name.toUpperCase(),
-    dateOfBirth: "1988-04-12",
     ...profile,
+    districtId,
     village: "Sriramapuram",
     mobileNumber: "9876500000",
     email: "",

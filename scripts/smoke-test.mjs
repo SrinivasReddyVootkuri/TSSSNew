@@ -54,7 +54,9 @@ async function main() {
     .from("event_categories")
     .select("slug")
     .eq("is_active", true);
-  check("active event categories are readable", (categories ?? []).length >= 6);
+  // Administrators manage categories freely, so only readability is asserted,
+  // not a specific count.
+  check("active event categories are readable", (categories ?? []).length >= 1);
 
   const { data: events } = await supabase.from("events").select("id").eq("is_published", true);
   check("published events are readable", (events ?? []).length > 0);

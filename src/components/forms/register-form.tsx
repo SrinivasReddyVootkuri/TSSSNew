@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useEffect } from "react";
+import { useActionState, useState } from "react";
 
 import { registerMember } from "@/lib/actions/public-actions";
 import { INITIAL_FORM_STATE, type FormState } from "@/lib/actions/state";
@@ -14,7 +14,6 @@ import {
   INDIAN_STATES,
   dialCodeFor,
 } from "@/lib/lookups";
-import { getDistricts } from "@/lib/data/public";
 import type { DistrictRow } from "@/lib/types";
 
 const INITIAL: FormState = INITIAL_FORM_STATE;
@@ -23,17 +22,29 @@ function formatInternational(dial: string, mobile: string): string {
   return `+${dial} ${mobile}`.trim();
 }
 
-export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }) {
+/**
+ * Membership registration.
+ *
+ * Gender is not collected: every member is recorded as male by default, which
+ * keeps the ID card's Details line consistent. Date of birth is optional, but
+ * age is required because it is what the card and the dashboard actually use.
+ *
+ * Districts are passed in from the server page: fetching them here would pull
+ * a server-only data module into a client bundle.
+ */
+export function RegisterForm({
+  registrationOpen,
+  districts,
+}: {
+  registrationOpen: boolean;
+  districts: DistrictRow[];
+}) {
   const [state, formAction] = useActionState(registerMember, INITIAL);
   const errors = (state.errors ?? {}) as Record<string, string>;
+  const values = (state.values ?? {}) as Record<string, string>;
 
   const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY_CODE);
-  const [districts, setDistricts] = useState<DistrictRow[]>([]);
   const dialCode = dialCodeFor(countryCode);
-
-  useEffect(() => {
-    getDistricts().then((districts) => setDistricts(districts));
-  }, []);
 
   if (state.status === "success" && state.data) {
     return (
@@ -67,6 +78,7 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
               Full Name
             </Label>
             <Input
+              defaultValue={values.fullName ?? ""}
               id="fullName"
               name="fullName"
               autoComplete="name"
@@ -82,6 +94,7 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
               Father&apos;s Name
             </Label>
             <Input
+              defaultValue={values.fatherName ?? ""}
               id="fatherName"
               name="fatherName"
               autoComplete="additional-name"
@@ -93,10 +106,11 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
           </div>
 
           <div>
-            <Label htmlFor="dateOfBirth">
+            <Label htmlFor="dateOfBirth" hint="Optional">
               Date of Birth
             </Label>
             <Input
+              defaultValue={values.dateOfBirth ?? ""}
               id="dateOfBirth"
               name="dateOfBirth"
               type="date"
@@ -112,10 +126,11 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
               Age
             </Label>
             <Input
+              defaultValue={values.age ?? ""}
               id="age"
               name="age"
               type="number"
-              autoComplete="age"
+              inputMode="numeric"
               min="1"
               max="120"
               placeholder="e.g. 25"
@@ -126,10 +141,28 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
           </div>
 
           <div>
+            <Label htmlFor="bloodGroup" required>
+              Blood Group
+            </Label>
+            <Select id="bloodGroup" name="bloodGroup" defaultValue={values.bloodGroup ?? ""} required>
+              <option value="" disabled>
+                Select blood group
+              </option>
+              {BLOOD_GROUP_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Select>
+            <FieldError message={errors.bloodGroup} />
+          </div>
+
+          <div>
             <Label htmlFor="village" required>
               Village
             </Label>
             <Input
+              defaultValue={values.village ?? ""}
               id="village"
               name="village"
               autoComplete="address-level2"
@@ -138,21 +171,6 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
               aria-invalid={Boolean(errors.village)}
             />
             <FieldError message={errors.village} />
-          </div>
-
-          <div>
-            <Label htmlFor="district" required>
-              District
-            </Label>
-            <Select id="district" name="district" defaultValue="" required>
-              <option value="">Select district</option>
-              {districts.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name}
-                </option>
-              ))}
-            </Select>
-            <FieldError message={errors.district} />
           </div>
         </div>
       </fieldset>
@@ -164,6 +182,35 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
         </legend>
 
         <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <Label htmlFor="districtId" required>
+              District
+            </Label>
+            <Select id="districtId" name="districtId" defaultValue={values.districtId ?? ""} required>
+              <option value="">Select district</option>
+              {districts.map((district) => (
+                <option key={district.id} value={district.id}>
+                  {district.name}
+                </option>
+              ))}
+            </Select>
+            <FieldError message={errors.districtId} />
+          </div>
+
+          <div>
+            <Label htmlFor="stateCode" required>
+              State
+            </Label>
+            <Select id="stateCode" name="stateCode" defaultValue={values.stateCode ?? "TS"} required>
+              {INDIAN_STATES.map((state) => (
+                <option key={state.code} value={state.code}>
+                  {state.name}
+                </option>
+              ))}
+            </Select>
+            <FieldError message={errors.stateCode} />
+          </div>
+
           <div>
             <Label htmlFor="countryCode" required>
               Country
@@ -196,6 +243,7 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
                 +{dialCode}
               </span>
               <Input
+                defaultValue={values.mobileNumber ?? ""}
                 id="mobileNumber"
                 name="mobileNumber"
                 type="tel"
@@ -213,11 +261,12 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
             <FieldError message={errors.mobileNumber} />
           </div>
 
-          <div>
-            <Label htmlFor="email" hint="Optional">
+          <div className="sm:col-span-2">
+            <Label htmlFor="email" hint="For event updates and your ID card">
               Email Address
             </Label>
             <Input
+              defaultValue={values.email ?? ""}
               id="email"
               name="email"
               type="email"
@@ -227,23 +276,23 @@ export function RegisterForm({ registrationOpen }: { registrationOpen: boolean }
             />
             <FieldError message={errors.email} />
           </div>
+        </div>
 
-          <div>
-            <Label htmlFor="profilePhoto" hint="Optional · any image · max 4 MB">
-              Photo
-            </Label>
-            <Input
-              id="profilePhoto"
-              name="profilePhoto"
-              type="file"
-              accept="image/*"
-              aria-invalid={Boolean(errors.profilePhoto)}
-            />
-            <p className="mt-1.5 text-xs text-slate-500">
-              Used on your ID card. A clear head-and-shoulders photograph works best.
-            </p>
-            <FieldError message={errors.profilePhoto} />
-          </div>
+        <div>
+          <Label htmlFor="profilePhoto" hint="Optional · any image · max 4 MB">
+            Photo
+          </Label>
+          <Input
+            id="profilePhoto"
+            name="profilePhoto"
+            type="file"
+            accept="image/*"
+            aria-invalid={Boolean(errors.profilePhoto)}
+          />
+          <p className="mt-1.5 text-xs text-slate-500">
+            Printed on your ID card. A clear head-and-shoulders photograph works best.
+          </p>
+          <FieldError message={errors.profilePhoto} />
         </div>
       </fieldset>
 

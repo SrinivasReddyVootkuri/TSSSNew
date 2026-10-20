@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { RegisterForm } from "@/components/forms/register-form";
-import { getSiteSettings } from "@/lib/data/public";
+import { getDistricts, getSiteSettings } from "@/lib/data/public";
 
 export const metadata: Metadata = {
   title: "Register",
@@ -23,7 +23,7 @@ const STEPS = [
 ];
 
 export default async function RegisterPage() {
-  const settings = await getSiteSettings();
+  const [settings, districts] = await Promise.all([getSiteSettings(), getDistricts()]);
 
   return (
     <>
@@ -48,7 +48,7 @@ export default async function RegisterPage() {
                 Fields marked <span className="text-red-600">*</span> are required.
               </p>
               <div className="mt-7">
-                <RegisterForm registrationOpen={settings.registration_open} />
+                <RegisterForm registrationOpen={settings.registration_open} districts={districts} />
               </div>
 
               {!settings.registration_open ? (

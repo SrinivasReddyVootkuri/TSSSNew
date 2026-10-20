@@ -87,24 +87,29 @@ async function registerMemberInner(
     return { status: "error", message: "Spam verification failed. Please refresh the page and try again." };
   }
 
-  const parsed = registrationSchema.safeParse({
-    fullName: formData.get("fullName"),
-    fatherName: formData.get("fatherName"),
-    gender: formData.get("gender"),
-    bloodGroup: formData.get("bloodGroup"),
-    countryCode: formData.get("countryCode"),
-    stateCode: formData.get("stateCode"),
-    dateOfBirth: formData.get("dateOfBirth"),
-    village: formData.get("village"),
-    mobileNumber: formData.get("mobileNumber"),
-    email: formData.get("email") ?? "",
-  });
+  const submission = {
+    fullName: String(formData.get("fullName") ?? ""),
+    fatherName: String(formData.get("fatherName") ?? ""),
+    bloodGroup: String(formData.get("bloodGroup") ?? ""),
+    countryCode: String(formData.get("countryCode") ?? ""),
+    stateCode: String(formData.get("stateCode") ?? ""),
+    districtId: String(formData.get("districtId") ?? ""),
+    dateOfBirth: String(formData.get("dateOfBirth") ?? ""),
+    village: String(formData.get("village") ?? ""),
+    mobileNumber: String(formData.get("mobileNumber") ?? ""),
+    email: String(formData.get("email") ?? ""),
+    age: String(formData.get("age") ?? ""),
+  };
+
+  const parsed = registrationSchema.safeParse(submission);
 
   if (!parsed.success) {
     return {
       status: "error",
       message: "Please correct the highlighted fields.",
       errors: fieldErrors(parsed.error),
+      // Echoed so the form can keep what the visitor typed.
+      values: submission,
     };
   }
 
@@ -126,7 +131,8 @@ async function registerMemberInner(
 
   const { data, error } = await supabase.rpc("submit_registration_v2", {
     p_full_name: input.fullName,
-    p_date_of_birth: input.dateOfBirth,
+    // An empty date input must travel as null: PostgREST cannot cast "" to date.
+    p_date_of_birth: input.dateOfBirth || null,
     p_father_name: input.fatherName,
     p_gender: "male",
     p_blood_group: input.bloodGroup,
@@ -134,10 +140,10 @@ async function registerMemberInner(
     p_country_code: input.countryCode.toUpperCase(),
     p_village: input.village,
     p_mobile_number: input.mobileNumber,
-    p_phone_country_code: input.phoneCountryCode || null,
+    p_phone_country_code: null,
     p_profile_photo_url: profilePhotoUrl || null,
     p_email: input.email || null,
-    p_age: input.age,
+    p_age: Number(input.age),
     p_district_id: input.districtId || null,
     p_rate_key: identifier,
   });
@@ -166,7 +172,9 @@ async function registerMemberInner(
       code.includes("INVALID_BLOOD_GROUP") ||
       code.includes("INVALID_GENDER") ||
       code.includes("INVALID_COUNTRY") ||
-      code.includes("INVALID_STATE")
+      code.includes("INVALID_STATE") ||
+      code.includes("INVALID_AGE") ||
+      code.includes("INVALID_DISTRICT")
     ) {
       return { status: "error", message: "Please check your details and try again." };
     }
@@ -267,24 +275,27 @@ async function submitBloodHelpRequestInner(
     return { status: "error", message: "Spam verification failed. Please refresh the page and try again." };
   }
 
-  const parsed = bloodHelpSchema.safeParse({
-    requesterName: formData.get("requesterName"),
-    mobileNumber: formData.get("mobileNumber"),
-    bloodGroup: formData.get("bloodGroup"),
-    hospitalName: formData.get("hospitalName"),
-    hospitalLocation: formData.get("hospitalLocation") ?? "",
-    districtId: formData.get("districtId"),
-    areaId: formData.get("areaId") ?? "",
-    requiredDate: formData.get("requiredDate") ?? "",
-    unitsRequired: formData.get("unitsRequired"),
-    message: formData.get("message") ?? "",
-  });
+  const submission = {
+    requesterName: String(formData.get("requesterName") ?? ""),
+    mobileNumber: String(formData.get("mobileNumber") ?? ""),
+    bloodGroup: String(formData.get("bloodGroup") ?? ""),
+    hospitalName: String(formData.get("hospitalName") ?? ""),
+    hospitalLocation: String(formData.get("hospitalLocation") ?? ""),
+    districtId: String(formData.get("districtId") ?? ""),
+    areaId: String(formData.get("areaId") ?? ""),
+    requiredDate: String(formData.get("requiredDate") ?? ""),
+    unitsRequired: String(formData.get("unitsRequired") ?? ""),
+    message: String(formData.get("message") ?? ""),
+  };
+
+  const parsed = bloodHelpSchema.safeParse(submission);
 
   if (!parsed.success) {
     return {
       status: "error",
       message: "Please correct the highlighted fields.",
       errors: fieldErrors(parsed.error),
+      values: submission,
     };
   }
 
@@ -414,29 +425,32 @@ async function registerDonorInner(
     return { status: "error", message: "Spam verification failed. Please refresh the page and try again." };
   }
 
-  const parsed = donorRegistrationSchema.safeParse({
-    fullName: formData.get("fullName"),
-    fatherName: formData.get("fatherName") ?? "",
-    mobileNumber: formData.get("mobileNumber"),
-    email: formData.get("email") ?? "",
-    bloodGroup: formData.get("bloodGroup"),
-    dateOfBirth: formData.get("dateOfBirth") ?? "",
-    gender: formData.get("gender") ?? "",
-    countryCode: formData.get("countryCode"),
-    stateCode: formData.get("stateCode") ?? "",
-    city: formData.get("city") ?? "",
-    area: formData.get("area") ?? "",
-    address: formData.get("address") ?? "",
-    lastDonationDate: formData.get("lastDonationDate") ?? "",
-    availability: formData.get("availability") ?? "",
-    preferredContact: formData.get("preferredContact") ?? "phone",
-  });
+  const submission = {
+    fullName: String(formData.get("fullName") ?? ""),
+    fatherName: String(formData.get("fatherName") ?? ""),
+    mobileNumber: String(formData.get("mobileNumber") ?? ""),
+    email: String(formData.get("email") ?? ""),
+    bloodGroup: String(formData.get("bloodGroup") ?? ""),
+    dateOfBirth: String(formData.get("dateOfBirth") ?? ""),
+    gender: String(formData.get("gender") ?? ""),
+    countryCode: String(formData.get("countryCode") ?? ""),
+    stateCode: String(formData.get("stateCode") ?? ""),
+    city: String(formData.get("city") ?? ""),
+    area: String(formData.get("area") ?? ""),
+    address: String(formData.get("address") ?? ""),
+    lastDonationDate: String(formData.get("lastDonationDate") ?? ""),
+    availability: String(formData.get("availability") ?? ""),
+    preferredContact: String(formData.get("preferredContact") ?? "phone"),
+  };
+
+  const parsed = donorRegistrationSchema.safeParse(submission);
 
   if (!parsed.success) {
     return {
       status: "error",
       message: "Please correct the highlighted fields.",
       errors: fieldErrors(parsed.error),
+      values: submission,
     };
   }
 
@@ -554,21 +568,24 @@ async function submitBlogPostInner(
     imageUrl = upload.trim();
   }
 
-  const parsed = blogSubmissionSchema.safeParse({
-    authorName: formData.get("authorName"),
-    authorEmail: formData.get("authorEmail"),
-    authorMobile: formData.get("authorMobile") ?? "",
-    title: formData.get("title"),
-    category: formData.get("category"),
-    content: formData.get("content"),
+  const submission = {
+    authorName: String(formData.get("authorName") ?? ""),
+    authorEmail: String(formData.get("authorEmail") ?? ""),
+    authorMobile: String(formData.get("authorMobile") ?? ""),
+    title: String(formData.get("title") ?? ""),
+    category: String(formData.get("category") ?? ""),
+    content: String(formData.get("content") ?? ""),
     featuredImage: imageUrl,
-  });
+  };
+
+  const parsed = blogSubmissionSchema.safeParse(submission);
 
   if (!parsed.success) {
     return {
       status: "error",
       message: "Please correct the highlighted fields.",
       errors: fieldErrors(parsed.error),
+      values: submission,
     };
   }
 

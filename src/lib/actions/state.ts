@@ -11,6 +11,15 @@ export type FormState<T = Record<string, string>> = {
   errors?: T;
   /** Returned to render the success screens. */
   data?: Record<string, string | number | boolean | null>;
+  /**
+   * The submitted values, echoed on validation failure.
+   *
+   * React resets uncontrolled inputs after a form action completes, which
+   * would otherwise wipe everything the visitor typed. Returning the values
+   * here and binding them to each input's `defaultValue` means the post-submit
+   * reset restores the typed values instead of clearing them.
+   */
+  values?: Record<string, string>;
 } & Record<string, unknown>;
 
 export const INITIAL_FORM_STATE: FormState = { status: "idle" };
