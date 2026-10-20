@@ -60,20 +60,25 @@ export const registrationSchema = z.object({
   countryCode: trimmed(
     z
       .string()
-      .length(2, "Please select your country.")
-      .refine((value) => COUNTRY_CODES.has(value.toUpperCase()), "Please select a supported country."),
+      .min(1, "Please select your country.")
+      .refine((value) => COUNTRY_CODES.has(value.toUpperCase()), "Please select a valid country."),
   ),
   stateCode: trimmed(
     z
       .string()
       .min(1, "Please select your state.")
-      .refine((value) => STATE_CODES.has(value.toUpperCase()), "Please select a supported state."),
+      .refine((value) => STATE_CODES.has(value.toUpperCase()), "Please select a valid state."),
+  ),
+  districtId: trimmed(
+    z.string().min(1, "Please select your district."),
   ),
   dateOfBirth: z
     .string()
-    .min(1, "Date of birth is required.")
-    .refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), "Enter a valid date.")
+    .optional()
     .refine((value) => {
+      if (!value || value === "") return true;
+      const parsed = /^\d{4}-\d{2}-\d{2}$/.test(value);
+      if (!parsed) return false;
       const date = new Date(`${value}T00:00:00`);
       if (Number.isNaN(date.getTime())) return false;
       const now = new Date();
@@ -98,6 +103,22 @@ export const registrationSchema = z.object({
     .refine((value) => value === "" || z.email().safeParse(value).success, "Enter a valid email address.")
     .optional()
     .default(""),
+  phoneCountryCode: trimmed(
+    z
+      .string()
+      .min(1, "Please select your country code.")
+      .refine((value) => COUNTRY_CODES.has(value.toUpperCase()), "Please select a valid country code."),
+  ),
+  age: trimmed(
+    z
+      .string()
+      .min(1, "Age is required.")
+      .refine((value) => /^\d{1,3}$/.test(value), "Please enter a valid age.")
+      .refine((value) => {
+        const n = parseInt(value, 10);
+        return !isNaN(n) && n >= 1 && n <= 120;
+      }, "Age must be between 1 and 120."),
+  ),
 });
 
 export type RegistrationInput = z.infer<typeof registrationSchema>;
