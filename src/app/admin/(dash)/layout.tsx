@@ -37,12 +37,14 @@ export default async function AdminDashLayout({ children }: { children: React.Re
       <header className="sticky top-0 z-40 border-b border-brand-100 bg-white/92 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex items-center gap-3">
-            <Link href="/admin" className="flex items-center gap-2.5">
+            <Link href="/admin" className="flex min-w-0 items-center gap-2.5">
               <span className="grid size-9 place-items-center overflow-hidden rounded-full bg-white ring-1 ring-brand-200">
                 <BrandEmblem alt={`${SITE_NAME} emblem`} size={36} />
               </span>
-              <span className="leading-tight">
-                <span className="block text-sm font-semibold text-ink-900">{SITE_NAME}</span>
+              <span className="leading-tight min-w-0">
+                <span className="block max-w-[10rem] truncate text-sm font-semibold text-ink-900 sm:max-w-none">
+                  {SITE_NAME}
+                </span>
                 <span className="block text-[0.65rem] font-semibold tracking-[0.16em] text-brand-700 uppercase">
                   Admin panel
                 </span>

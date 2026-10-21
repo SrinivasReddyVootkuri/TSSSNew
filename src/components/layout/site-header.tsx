@@ -17,17 +17,17 @@ export function SiteHeader({ branding }: { branding: Branding }) {
       <div className="container-page flex h-20 items-center justify-between gap-4">
         <Link
           href="/"
-          className="group flex shrink-0 items-center gap-3"
+          className="group flex min-w-0 items-center gap-3"
           aria-label={`${branding.name} home`}
         >
           <span className="relative grid size-12 shrink-0 place-items-center overflow-hidden rounded-full bg-white shadow-[0_6px_18px_-8px_rgba(11,106,181,0.85)] ring-1 ring-brand-200 transition-transform duration-300 group-hover:scale-105 sm:size-14">
             <BrandEmblem alt={`${branding.name} emblem`} size={56} priority />
           </span>
-          <span className="leading-tight">
-            <span className="block font-display text-lg font-semibold text-ink-900 transition-colors group-hover:text-brand-700 sm:text-xl">
+          <span className="min-w-0 leading-tight">
+            <span className="block max-w-[11rem] truncate font-display text-lg font-semibold text-ink-900 transition-colors group-hover:text-brand-700 sm:max-w-none sm:text-xl">
               {branding.name}
             </span>
-            <span className="block text-[0.68rem] font-semibold tracking-[0.2em] text-brand-700 uppercase">
+            <span className="hidden text-[0.68rem] font-semibold tracking-[0.2em] text-brand-700 uppercase sm:block">
               {branding.shortName} · Service · Devotion · Unity
             </span>
           </span>
