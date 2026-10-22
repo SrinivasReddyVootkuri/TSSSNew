@@ -331,53 +331,47 @@ export async function getImpactStats(): Promise<
   Array<{ label: string; value: number; description: string }>
 > {
   const supabase = createPublicClient();
-  const today = new Date().toISOString().slice(0, 10);
 
-  const [members, events, upcoming, bloodRequests, stories, categories] = await Promise.all([
-    supabase.from("members").select("id", { count: "exact", head: true }).eq("status", "active"),
-    supabase.from("events").select("id", { count: "exact", head: true }).eq("is_published", true),
-    supabase
-      .from("events")
-      .select("id", { count: "exact", head: true })
-      .eq("is_published", true)
-      .gte("event_date", today),
-    supabase.from("blood_help_requests").select("id", { count: "exact", head: true }),
-    supabase.from("blogs").select("id", { count: "exact", head: true }).eq("status", "approved"),
-    supabase
-      .from("event_categories")
-      .select("id", { count: "exact", head: true })
-      .eq("is_active", true),
-  ]);
+  // The aggregate lives in the database (migration 0016): the public client
+  // cannot read `members` or blood requests directly — Row Level Security
+  // keeps those tables private — so this returns exactly the six counters and
+  // no personal rows.
+  const { data, error } = await supabase.rpc("trust_impact_stats");
+  const stats = Array.isArray(data) ? data[0] : data;
+
+  if (error || !stats) {
+    console.error("trust_impact_stats failed:", error?.message ?? "no data");
+  }
 
   return [
     {
       label: "Registered Members",
-      value: members.count ?? 0,
+      value: Number(stats?.registered_members ?? 0),
       description: "Srinivas's registered with the trust",
     },
     {
       label: "Events Conducted",
-      value: events.count ?? 0,
+      value: Number(stats?.events_conducted ?? 0),
       description: "Devotional and community programmes published",
     },
     {
       label: "Upcoming Events",
-      value: upcoming.count ?? 0,
+      value: Number(stats?.upcoming_events ?? 0),
       description: "Programmes scheduled ahead",
     },
     {
       label: "Blood Assistance",
-      value: bloodRequests.count ?? 0,
+      value: Number(stats?.blood_assistance ?? 0),
       description: "Blood donation requests coordinated",
     },
     {
       label: "Community Stories",
-      value: stories.count ?? 0,
+      value: Number(stats?.community_stories ?? 0),
       description: "Approved articles published on this website",
     },
     {
       label: "Service Categories",
-      value: categories.count ?? 0,
+      value: Number(stats?.service_categories ?? 0),
       description: "Areas where the trust is active",
     },
   ];

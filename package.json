@@ -23,6 +23,7 @@
     "db:apply:member-age": "node scripts/db-apply.mjs supabase/migrations/0013_member_age_and_district.sql",
     "db:apply:districts": "node scripts/db-apply.mjs supabase/migrations/0014_telangana_andhra_districts.sql",
     "db:apply:selfservice-card": "node scripts/db-apply.mjs supabase/migrations/0015_self_service_id_card.sql",
+    "db:apply:impact-stats": "node scripts/db-apply.mjs supabase/migrations/0016_public_impact_stats.sql",
     "db:seed": "node scripts/db-apply.mjs supabase/seed.sql",
     "db:remove-demo": "node scripts/db-apply.mjs supabase/remove-demo-content.sql",
     "db:reset-sequences": "node scripts/db-apply.mjs supabase/reset-sequences.sql",
